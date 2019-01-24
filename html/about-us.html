@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1"/>
+  <meta name="renderer" content="webkit"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <link rel="icon" href="/favicon.ico">
+  <!--Bootstrap 3.3.7 -->
+  <link href="../plugin/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <!--Swiper.js 2.7.6-->
+  <link rel="stylesheet" href="../plugin/swiper.js/2.7.6/css/idangerous.swiper.css">
+  <!--custom styles-->
+  <link rel="stylesheet" href="../css/acdors.css">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="../plugin/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="../plugin/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <title>星榜戏逗 - 关于我们</title>
+</head>
+<body>
+
+<!--<div id="wrapper">-->
+  <!-------------------------------- 页首导航栏 -------------------------------->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+        <!--<a class="navbar-brand" href="#">-->
+          <img src="../img/logo.png" alt="acdors logo">
+        </a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav nav-pills navbar-right nav-justified">
+          <li><a href="../index.html">首页</a></li>
+          <li><a href="recruiting.html">剧组招募</a></li>
+          <li><a href="partners.html">合作伙伴</a></li>
+          <li><a href="teachers.html">师资介绍</a></li>
+          <li class="active"><a href="#">关于我们</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!----------------------- 页首大图 ----------------------->
+  <div class="header-banner" style="padding: 0;">
+    <div class="banner-wrap">
+      <img class="img-responsive" src="../img/banner-aboutus.jpg" alt="about us banner">
+    </div>
+  </div>
+
+  <!-------------------------------- 公司简介 -------------------------------->
+  <div id="company-profile" class="container">
+    <h3>公司简介</h3>
+  </div>
+
+  <!--------------------------- 页脚 --------------------------->
+  <div class="footer">
+    <div class="container">
+      <p>
+        版权所有:北京温暖阳光下教育科技有限公司
+      </p>
+      <div class="divider"></div>
+      <p>
+        公司电话：400-898-9680
+      </p>
+      <div class="divider"></div>
+      <p>
+        公司地址：北京市朝阳区酒仙桥路酒仙公寓B座2021
+      </p>
+      <div class="divider"></div>
+      <p>
+        备案号：京ICP备18028385号-1
+      </p>
+    </div>
+  </div>
+
+
+
+<!--</div>-->
+
+  <!--------------------------- 展示二维码的边栏悬浮框 --------------------------->
+  <div class="side-dock">
+    <div class="btn">
+      <img src="../img/icon/icon-wechat.png">
+      <div class="qr-block" id="wechat">
+        <img src="../img/qie-qrcode.png">
+        <p>星榜戏逗官方微信</p>
+      </div>
+    </div>
+    <div class="btn">
+      <img src="../img/icon/icon-weibo.png">
+      <div class="qr-block" id="weibo">
+        <img src="../img/qie-qrcode.png">
+        <p>星榜戏逗官方微博</p>
+      </div>
+    </div>
+    <div class="btn">
+      <img src="../img/icon/icon-business.png">
+      <div class="qr-block" id="download">
+        <img src="../img/qie-qrcode.png">
+        <p>商务合作</p>
+      </div>
+    </div>
+    <div class="btn totop">
+      <a href="#">
+        <img src="../img/icon/icon-totop.png">
+      </a>
+    </div>
+  </div>
+
+  <!-------------------------------- 各种插件 -------------------------------->
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <!--(for debugging only)-->
+  <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
+  <!-- swiper.js 2.7.6 (for debuggin only) -->
+  <script src="../plugin/swiper.js/2.7.6/js/idangerous.swiper.min.js"></script>
+  <!--<script src="../js/carousels.js"></script>-->
+  <!--Bootstrap 3.3.37 javascript file (for debugging only)-->
+  <script src="../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <!-------------------------------- 自定义js -------------------------------->
+  <script src="../js/acdors.js"></script>
+  <script>
+    "use strict";
+    $(function () {
+      $.ajax({
+        type: "get",
+        url: domainUrl + 'web/about',
+        async: true,
+        data:{groupid: 1},
+        dataType: "json",
+        success: function (data) {
+          data = data.data;
+          var $p = '<p>' + data.content + '</p>';
+          $('#company-profile').append($p);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

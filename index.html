@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1"/>
+  <meta name="renderer" content="webkit"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <link rel="icon" href="/favicon.ico">
+  <!--Bootstrap 3.3.7 -->
+  <link href="../plugin/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <!--Swiper.js 2.7.6-->
+  <link rel="stylesheet" href="./plugin/swiper.js/2.7.6/css/idangerous.swiper.css">
+  <!--custom styles-->
+  <link rel="stylesheet" href="./css/acdors.css">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="./plugin/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="./plugin/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <title>星榜戏逗 - 你,绝对有戏</title>
+  <style>
+
+  </style>
+</head>
+<body>
+
+  <!-------------------------------- 页首导航栏 -------------------------------->
+  <!--<nav class="navbar navbar-inverse">-->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          <img src="./img/logo.png" alt="acdors logo">
+        </a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav nav-pills navbar-right nav-justified">
+          <li class="active"><a href="#">首页</a></li>
+          <li><a href="./html/recruiting.html">剧组招募</a></li>
+          <li><a href="./html/partners.html">合作伙伴</a></li>
+          <li><a href="./html/teachers.html">师资介绍</a></li>
+          <li><a href="./html/about-us.html">关于我们</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-------------------------------- 首页轮播图 -------------------------------->
+  <div id="index-slides" class="main-carousel">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+      </div>
+    </div>
+    <div class="pagination"></div>
+  </div>
+
+  <!-------------------------------- 热门剧组 -------------------------------->
+  <div id="hot" class="container">
+    <div class="row">
+      <div class="sec-caption col-xs-12">
+        <p>热门剧组</p>
+        <div class="padding"></div>
+      </div>
+    </div>
+    <div id="img-tba"></div>
+  </div> <!-- #hot -->
+
+
+  <!-------------------------------- 职业通道 -------------------------------->
+  <div id="career" class="container">
+    <div class="row">
+      <div class="sec-caption col-xs-12">
+        <p>职业通道</p>
+        <div class="padding"></div>
+      </div>
+    </div>
+    <div id="path" class="row">
+
+      <div id="ct-1" class="thumb-wrap col-xs-3 col-sm-2">
+        <div class="career-thumb">
+          <img src="./img/icon/career-signup.png" alt="signup">
+        </div>
+        <p>剧组报名</p>
+      </div>
+
+      <div class="arrow-right-red col-xs-1 col-sm-1"></div>
+      <div id="ct-2" class="thumb-wrap col-xs-3 col-sm-2">
+        <div class="career-thumb ">
+          <img src="./img/icon/career-training.png" alt="training">
+        </div>
+        <p>海选培训</p>
+      </div>
+
+      <div class="arrow-right-red col-xs-1 col-sm-1"></div>
+      <div id="ct-3" class="thumb-wrap col-xs-3 col-sm-2">
+        <div class="career-thumb ">
+          <img src="./img/icon/career-final-training.png" alt="final training">
+        </div>
+        <p>决赛培训</p>
+      </div>
+
+      <div class="arrow-right-red col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-0"></div>
+      <div id="ct-4" class="thumb-wrap col-xs-3 col-sm-2">
+        <div class="career-thumb ">
+          <img src="./img/icon/career-telant.png" alt="telant">
+        </div>
+        <p>真人秀、网综</p>
+      </div>
+      <div class="arrow-right-red col-xs-1 col-sm-1"></div>
+      <div id="ct-5" class="thumb-wrap col-xs-3 col-sm-2">
+        <div class="career-thumb ">
+          <img src="./img/icon/career-join.png" alt="join">
+        </div>
+        <p>定角进组</p>
+      </div>
+    </div>
+  </div>
+
+  <!-------------------------------- 合作机构 -------------------------------->
+  <div id="partner-orgs" class="container">
+    <div class="row">
+      <div class="sec-caption col-xs-12">
+        <p>合作机构</p>
+        <div class="padding"></div>
+      </div>
+    </div>
+    <div id="orgs" class="row"></div>
+  </div> <!-- #partner-orgs -->
+
+
+  <!--------------------------- 页脚 --------------------------->
+  <div class="footer">
+    <div class="container">
+      <p>
+        版权所有:北京温暖阳光下教育科技有限公司
+      </p>
+      <div class="divider"></div>
+      <p>
+        公司电话：400-898-9680
+      </p>
+      <div class="divider"></div>
+      <p>
+        公司地址：北京市朝阳区酒仙桥路酒仙公寓B座2021
+      </p>
+      <div class="divider"></div>
+      <p>
+        备案号：京ICP备18028385号-1
+      </p>
+    </div>
+  </div>
+
+  <!--------------------------- 展示二维码的边栏悬浮框 --------------------------->
+  <div class="side-dock">
+    <div class="btn">
+      <img src="./img/icon/icon-wechat.png">
+      <div class="qr-block" id="wechat">
+        <img src="./img/qie-qrcode.png">
+        <p>星榜戏逗官方微信</p>
+      </div>
+    </div>
+    <div class="btn">
+      <img src="./img/icon/icon-weibo.png">
+      <div class="qr-block" id="weibo">
+        <img src="./img/qie-qrcode.png">
+        <p>星榜戏逗官方微博</p>
+      </div>
+    </div>
+    <div class="btn">
+      <img src="./img/icon/icon-business.png">
+      <div class="qr-block" id="download">
+        <img src="./img/qie-qrcode.png">
+        <p>商务合作</p>
+      </div>
+    </div>
+    <div class="btn totop">
+      <a href="#">
+        <img src="./img/icon/icon-totop.png">
+      </a>
+    </div>
+  </div>
+
+
+  <!-------------------------------- 各种插件 -------------------------------->
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <!--(for debugging only)-->
+  <script src="./plugin/jquery/1.12.4/jquery.min.js"></script>
+ <!-- swiper.js 2.7.6 (for debuggin only) -->
+  <script src="./plugin/swiper.js/2.7.6/js/idangerous.swiper.min.js"></script>
+  <!--<script src="./js/carousels.js"></script>-->
+  <!--Bootstrap 3.3.37 javascript file (for debugging only)-->
+  <script src="./plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <!-------------------------------- 自定义js -------------------------------->
+  <script src="./js/acdors.js"></script>
+  <script>
+    "use strict";
+
+    $(function () {
+      //请求大轮播图数据
+      $.ajax({
+        type: "get",
+        url: domainUrl + 'web/banner',
+        async: true,
+        data:{banner_area: 1},
+        dataType: "json",
+        success: function (data) {
+          data = data.data;
+          for (var i=0, length=data.length; i<length; ++i) {
+            var $slides = '<div class="swiper-slide">' +
+              '<img src="' + ossUrl + data[i].banner + '" alt="首页轮播图">' +
+              '</div>';
+            $('#index-slides .swiper-wrapper').append($slides);
+          }
+
+          // 首页主轮播图
+          var pagi = '';
+          var loop = false;
+          var autoplay = 0;
+
+          // 多于一张图才显示翻页按钮,自动循环
+          if(data.length > 1) {
+            pagi = '.pagination';
+            loop = true;
+            autoplay = 5000;
+          }
+          var indexSlides = $('#index-slides .swiper-container').swiper({
+            pagination: pagi,
+            loop: loop,
+            autoplay: autoplay,
+            speed: 1000,
+            grabCursor: true,
+            paginationClickable: true,
+            slidesPerView: 1,
+            centeredSlides: true
+          }); // swiper({})
+        } // success
+      }); // $.ajax 请求大轮播图数据
+
+      // 请求热门剧组和合作机构数据
+      $.ajax({
+        type: "get",
+        url: domainUrl + 'web/indexs',
+        async: true,
+        dataType: "json",
+        success: function (data) {
+          data = data.data;
+
+          // 请求热门剧组数据
+          if(data.isnull) { //后台没有上传热门剧组数据，展示"敬请期待"图片
+            var $img = '<img class="img-responsive" src="./img/tba.png" alt="敬请期待">';
+            $('#hot > #img-tba').append($img);
+          } else
+          { //请求到了热门剧组数据
+
+            /* ================================
+                热门剧组 - 剧组图片与简单剧组信息
+               ================================ */
+            var crewPicUrl = ossUrl + data.crew.crew_picurl;
+            var $introBlk = '<div class="row intro-blk">' +
+                '<div class="intro-img col-xs-12 col-md-7">' +
+                  '<img class="img-responsive" src="' + crewPicUrl + '" alt="剧组图片">' +
+                '</div>' +
+                '<div class="intro-text col-xs-12 col-md-5">' +
+                  '<h3>' + data.crew.crew_name + '</h3>' +
+                  '<p>' +
+                    '剧组类型：' + data.crew.crew_type + '<br>' +
+                    '导演：' + data.crew.crew_director + '<br>' +
+                    '制作公司：' + data.crew.crew_producer + '<br>' +
+                    '出品人/出品公司：' + data.crew.crew_investor + '<br>' +
+                    '开机日期：' + data.crew.crew_bootime + '<br>' +
+                    '拍摄地点：' + data.crew.crew_position +
+                  '</p>' +
+                '</div>' +
+              '</div>';
+            $('#hot').append($introBlk);
+
+            if(data.actor[0].information != "") {
+
+              /* ================================
+                  热门剧组 - 明星轮播图
+                 ================================ */
+              var length = data.actor.length;
+
+              // 明星图片轮播图
+              var $hotSlideWrapper = '<div id="hot-slides" class="intro-carousel">' +
+                  '<div class="carousel-wrapper">' +
+                    '<a href="#" class="arrow-left"></a>' +
+                    '<a href="#" class="arrow-right"></a>' +
+                    '<div class="swiper-container">' +
+                      '<div class="swiper-wrapper">' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>';
+              $('#hot').append($hotSlideWrapper);
+              for(var i=0; i<length; ++i ) {
+                var $actorSlide = '<div class="swiper-slide">' +
+                    '<img src="' + ossUrl + data.actor[i].avatar + '" alt="明星轮播图">' +
+                  '</div>';
+                $('#hot-slides .swiper-wrapper').append($actorSlide);
+              }
+
+              // 明星介绍轮播文本
+              var $hotInfoSlideWrapper = '<div id="hot-info-slides" class="intro-text-carousel">' +
+                  '<div class="swiper-container">' +
+                    '<div class="swiper-wrapper">' +
+                    '</div>' +
+                  '</div>' +
+                '</div>';
+              $('#hot').append($hotInfoSlideWrapper);
+              for(var i=0; i<length; ++i) {
+                // var gender = data.actor[i]
+                var $actorInfoSlide = '<div class="swiper-slide">' +
+                  '<table class="profile-info">' +
+                    '<thead>' +
+                      '<tr><th colspan="2"><h3>' + data.actor[i].name + '</h3></th></tr>' +
+                    '</thead>' +
+                    '<tbody>' +
+                      '<tr>' +
+                        '<th>饰演：</th>' +
+                        '<td>' + data.actor[i].role + '</td>' +
+                      '</tr>' +
+                      '<tr>' +
+                        '<th>作品：</th>' +
+                        '<td>' + data.actor[i].experiment + '</td>' +
+                      '</tr>' +
+                      '<tr>' +
+                        '<th>简介：</th>' +
+                        '<td>' + data.actor[i].information + '</td>' +
+                      '</tr>' +
+                    '</tbody>' +
+                  '</table>' +
+                '</div>';
+                $('#hot-info-slides .swiper-wrapper').append($actorInfoSlide);
+              } // for
+
+              // 明星图片swiperjs配置
+              var hotSlides = $('#hot-slides .swiper-container').swiper({
+                // loop: true,
+                autoplay: 2000,
+                grabCursor: true,
+                slidesPerView: 3,
+                autoplayDisableOnInteraction: true,
+                centeredSlides: true,
+                onSlideChangeStart: function () {
+                  updateHotInfo(hotSlides.activeIndex);
+                }
+              });
+              $('#hot-slides .arrow-left').on('click', function (e) {
+                e.preventDefault();
+                hotSlides.swipePrev();
+              });
+              $('#hot-slides .arrow-right').on('click', function (e) {
+                e.preventDefault();
+                hotSlides.swipeNext();
+              });
+
+              // 明星介绍轮播文本 swiperjs 配置
+              var hotInfoSlides = $('#hot-info-slides .swiper-container').swiper({
+                autoplay: 2000,
+                slidesPerView: 1,
+                centeredSlides: true,
+                autoplayDisableOnInteraction: true,
+                grabCursor: true,
+                onSlideChangeStart: function () {
+                  hotSlides.swipeTo(hotInfoSlides.activeIndex, 400, false);
+                }
+              });
+
+              function updateHotInfo(index) {
+                hotInfoSlides.swipeTo(index, 400, false);
+              }
+
+            } // if(data.actor[0].information != "")
+
+          } // else 请求到了热门剧组数据
+
+          // 请求合作机构数据
+          var orgInfo = data.organinfo;
+
+          for(var i=0, length=orgInfo.length; i< (length<3 ? length : 3); ++i) { //最多展示三个机构
+
+            // 根据返回的机构数量偏移图标，达到居中效果，最多一行三个
+            var $introThumb = '<a class="col-xs-4';
+            if(i == 0) {
+              switch (length) {
+                case 1:
+                  $introThumb += ' col-xs-offset-4" ';
+                  break;
+                case 2:
+                  $introThumb += ' col-xs-offset-2" ';
+                  break;
+                default:
+                  $introThumb += '" '; //默认一行三个机构
+                  break;
+              }
+            } else {
+              $introThumb += '" ';
+            }
+
+            $introThumb += 'href=./html/partner-info.html?id=' + encodeURI(orgInfo[i].organ[0].id) + '>' +
+                '<div class="intro-thumb">' +
+                  '<div class="intro-thumb-img">' +
+                    '<img class="img-responsive" src="' + ossUrl + orgInfo[i].organ[0].organ_picurl + '" alt="合作机构">' +
+                  '</div>' +
+                  '<p>' + orgInfo[i].organ[0].organ_name + '</p>' +
+                '</div>' +
+              '</a>';
+            $('#partner-orgs #orgs').append($introThumb);
+          }
+
+        } // success: function()
+      }); // $.ajax 请求热门剧组数据
+
+    });
+  </script>
+
+</body>
+</html>

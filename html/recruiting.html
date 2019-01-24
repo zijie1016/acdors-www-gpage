@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1"/>
+  <meta name="renderer" content="webkit"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <link rel="stylesheet" href="../css/acdors.css">
+  <link rel="icon" href="/favicon.ico">
+  <!--Bootstrap 3.3.7 -->
+  <link href="../plugin/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <!--Swiper.js 2.7.6-->
+  <link rel="stylesheet" href="../plugin/swiper.js/2.7.6/css/idangerous.swiper.css">
+  <!--custom styles-->
+  <link rel="stylesheet" href="../css/acdors.css">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="../plugin/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="../plugin/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <title>星榜戏逗 - 剧组招募</title>
+  <style>
+    body * {
+      /*border: 1px dashed blue;*/
+    }
+  </style>
+</head>
+<body>
+  <!-------------------------------- 页首导航栏 -------------------------------->
+  <!--<nav class="navbar navbar-inverse">-->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          <img src="../img/logo.png" alt="acdors logo">
+        </a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav nav-pills navbar-right nav-justified">
+          <li><a href="../index.html">首页</a></li>
+          <li class="active"><a href="#">剧组招募</a></li>
+          <li><a href="partners.html">合作伙伴</a></li>
+          <li><a href="teachers.html">师资介绍</a></li>
+          <li><a href="about-us.html">关于我们</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-------------------------------- 活动轮播图 -------------------------------->
+  <div id="event-slides" class="main-carousel">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+      </div>
+    </div>
+    <div class="pagination"></div>
+  </div>
+
+  <!-------------------------------- 热剧推荐 -------------------------------->
+  <div id="hot-recommend" class="container">
+    <div class="row">
+      <div class="sec-caption col-xs-12">
+        <p>热剧推荐</p>
+        <div class="padding"></div>
+      </div>
+    </div>
+    <div id="img-tba"></div>
+  </div> <!-- #hot-recommend -->
+
+
+
+  <!--------------------------- 页脚 --------------------------->
+  <div class="footer">
+    <div class="container">
+      <p>
+        版权所有:北京温暖阳光下教育科技有限公司
+      </p>
+      <div class="divider"></div>
+      <p>
+        公司电话：400-898-9680
+      </p>
+      <div class="divider"></div>
+      <p>
+        公司地址：北京市朝阳区酒仙桥路酒仙公寓B座2021
+      </p>
+      <div class="divider"></div>
+      <p>
+        备案号：京ICP备18028385号-1
+      </p>
+    </div>
+  </div>
+
+  <!--------------------------- 展示二维码的边栏悬浮框 --------------------------->
+  <div class="side-dock">
+    <div class="btn">
+      <img src="../img/icon/icon-wechat.png">
+      <div class="qr-block" id="wechat">
+        <img src="../img/qie-qrcode.png">
+        <p>星榜戏逗官方微信</p>
+      </div>
+    </div>
+    <div class="btn">
+      <img src="../img/icon/icon-weibo.png">
+      <div class="qr-block" id="weibo">
+        <img src="../img/qie-qrcode.png">
+        <p>星榜戏逗官方微博</p>
+      </div>
+    </div>
+    <div class="btn">
+      <img src="../img/icon/icon-business.png">
+      <div class="qr-block" id="download">
+        <img src="../img/qie-qrcode.png">
+        <p>商务合作</p>
+      </div>
+    </div>
+    <div class="btn totop">
+      <a href="#">
+        <img src="../img/icon/icon-totop.png">
+      </a>
+    </div>
+  </div>
+
+  <!-------------------------------- 各种插件 -------------------------------->
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <!--(for debugging only)-->
+  <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
+  <!-- swiper.js 2.7.6 (for debuggin only) -->
+  <script src="../plugin/swiper.js/2.7.6/js/idangerous.swiper.min.js"></script>
+  <!--<script src="../js/carousels.js"></script>-->
+  <!--Bootstrap 3.3.37 javascript file (for debugging only)-->
+  <script src="../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <!-------------------------------- 自定义js -------------------------------->
+  <script src="../js/acdors.js"></script>
+  <script>
+    $(function () {
+
+      // 请求活动大轮播图
+      $.ajax({
+        type: "get",
+        url: domainUrl + 'web/banner',
+        async: true,
+        data:{banner_area: 2},
+        dataType: "json",
+        success: function (data) {
+          data = data.data;
+          for (var i=0, length=data.length; i<length; ++i) {
+            var $slides = '<div class="swiper-slide">' +
+              '<img src="' + ossUrl + data[i].banner + '" alt="首页轮播图">' +
+              '</div>';
+            $('#event-slides .swiper-wrapper').append($slides);
+          }
+
+          // 剧组招募 - 活动轮播图
+          var pagi = '';
+          var loop = false;
+          var autoplay = 0;
+
+          // 多于一张图才显示翻页按钮,自动循环
+          if(data.length > 1) {
+            pagi = '.pagination';
+            loop = true;
+            autoplay = 5000;
+          }
+
+          var eventSlides = $('#event-slides .swiper-container').swiper({
+            pagination: pagi,
+            loop: loop,
+            autoplay: autoplay,
+            speed: 1000,
+            grabCursor: true,
+            paginationClickable: true,
+            slidesPerView: 1,
+            centeredSlides: true
+          });
+        } // success
+      }); // $.ajax 请求活动大轮播图
+
+      //$.ajax 请求剧组信息
+      $.ajax({
+        type: "get",
+        url: domainUrl + 'web/drama',
+        async: true,
+        dataType: "json",
+        success: function (data) {
+          var isnull = data.isnull;
+
+          // 请求推荐剧组数据
+          if(isnull) { //后台没有上传剧组数据，展示"敬请期待"图片
+            var $img = '<img class="img-responsive" src="../img/tba.png" alt="敬请期待">';
+            $('#hot-recommend > #img-tba').append($img);
+          }
+          else { //请求到了剧组数据
+            data = data.data;
+
+            /* ================================
+             剧组招募 - 剧组图片与简单剧组信息
+            ================================ */
+            var $introBlk = '<div class="row intro-blk">' +
+                '<div class="intro-img col-xs-12 col-md-7">' +
+                  '<img class="img-responsive" src="' + ossUrl + data.crew.crew_picurl + '" alt="剧组图片">' +
+                '</div>' +
+                '<div class="intro-text col-xs-12 col-md-5">' +
+                  '<h3>' + data.crew.crew_name + '</h3>' +
+                  '<p>' +
+                    '剧组类型：' + data.crew.crew_type + '<br>' +
+                    '导演：' + data.crew.crew_director + '<br>' +
+                    '制作公司：' + data.crew.crew_producer + '<br>' +
+                    '出品人/出品公司：' + data.crew.crew_investor + '<br>' +
+                    '开机日期：' + data.crew.crew_bootime + '<br>' +
+                    '拍摄地点：' + data.crew.crew_position +
+                  '</p>' +
+                '</div>' +
+                '<a class="col-xs-12 col-md-5" href="crew-info.html">查看剧组详情</a>' +
+              '</div>';
+            $('#hot-recommend').append($introBlk);
+             // 剧故事梗概
+            var $story = '<div class="simple-text">' +
+                '<h4>故事梗概：</h4>' +
+                '<p>' + data.crew.introduction + '</p>' +
+              '</div>';
+            $('#hot-recommend').append($story);
+
+            if(data.actor[0].information != "") { //如果没有返回演员的数据，就完全不展示轮播图
+
+              /* ================================
+                           剧组明星轮播图
+                 ================================ */
+
+              // 明星图片轮播图
+              var $recommendSlideWrapper = '<div id="recommend-slides" class="intro-carousel">' +
+                '<div class="carousel-wrapper">' +
+                '<a href="#" class="arrow-left"></a>' +
+                '<a href="#" class="arrow-right"></a>' +
+                '<div class="swiper-container">' +
+                '<div class="swiper-wrapper">' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+              $('#hot-recommend').append($recommendSlideWrapper);
+              for(var i=0,length=data.actor.length; i<length; ++i ) {
+                var $actorSlide = '<div class="swiper-slide">' +
+                  '<img src="' + ossUrl + data.actor[i].avatar + '" alt="明星轮播图">' +
+                  '</div>';
+                $('#recommend-slides .swiper-wrapper').append($actorSlide);
+              }
+
+              // 明星介绍轮播文本
+              var $actorInfoSlideWrapper = '<div id="actor-info-slides" class="intro-text-carousel">' +
+                '<div class="swiper-container">' +
+                '<div class="swiper-wrapper">' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+              $('#hot-recommend').append($actorInfoSlideWrapper);
+              for(var i=0,length=data.actor.length; i<length; ++i) {
+                var $actorInfoSlide = '<div class="swiper-slide">' +
+                  '<table class="profile-info">' +
+                  '<thead>' +
+                  '<tr><th colspan="2"><h3>' + data.actor[i].name + '</h3></th></tr>' +
+                  '</thead>' +
+                  '<tbody>' +
+                  '<tr>' +
+                  '<th>饰演：</th>' +
+                  '<td>' + data.actor[i].role + '</td>' +
+                  '</tr>' +
+                  '<tr>' +
+                  '<th>作品：</th>' +
+                  '<td>' + data.actor[i].experiment + '</td>' +
+                  '</tr>' +
+                  '<tr>' +
+                  '<th>简介：</th>' +
+                  '<td>' + data.actor[i].information + '</td>' +
+                  '</tr>' +
+                  '</tbody>' +
+                  '</table>' +
+                  '</div>';
+                $('#actor-info-slides .swiper-wrapper').append($actorInfoSlide);
+              } // for
+
+              // 明星图片swiperjs配置
+              var recommendSlides = $('#recommend-slides .swiper-container').swiper({
+                // loop: true,
+                // autoplay: 2000,
+                grabCursor: true,
+                slidesPerView: 3,
+                autoplayDisableOnInteraction: true,
+                centeredSlides: true,
+                onSlideChangeStart: function () {
+                  updateHotInfo(recommendSlides.activeIndex);
+                }
+              });
+              $('#recommend-slides .arrow-left').on('click', function (e) {
+                e.preventDefault();
+                recommendSlides.swipePrev();
+              });
+              $('#recommend-slides .arrow-right').on('click', function (e) {
+                e.preventDefault();
+                recommendSlides.swipeNext();
+              });
+
+              // 明星介绍轮播文本 swiperjs 配置
+              var actorInfoSlides = $('#actor-info-slides .swiper-container').swiper({
+                autoplay: 2000,
+                slidesPerView: 1,
+                centeredSlides: true,
+                autoplayDisableOnInteraction: true,
+                grabCursor: true,
+                onSlideChangeStart: function () {
+                  recommendSlides.swipeTo(actorInfoSlides.activeIndex, 400, false);
+                }
+              });
+
+              function updateHotInfo(index) {
+                actorInfoSlides.swipeTo(index, 400, false);
+              }
+            } // if(data.actor[0].information != "")
+
+
+          } // else 请求到了剧组数据
+        } // success
+      }); //$.ajax 请求剧组信息
+
+
+    }); // $(function(){})
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
