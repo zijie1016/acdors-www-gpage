@@ -59,6 +59,11 @@
           $('#likes').append(data.like_count);
 
           var $video = '<video id="myVideo" src="' + data.video_src +
+            '" webkit-playsinline="true"' +
+            ' playsinline="true"' +
+            ' x5-video-player-type="h5"' +
+            ' x5-video-orientation="portraint"' +
+            ' x5-video-player-fullscreen="false"' +
             '" controls="controls"></video>';
           $('#wrapper').append($video);
         }
