@@ -17,12 +17,10 @@
 <body>
   <div id="wrapper">
     <div id="shareUI">
-      <div id="profilePic">
-        <img src="img/lufy.jpg">
-      </div>
+      <div id="profilePic"> </div>
       <div id="likeBtn">
         <img  src="img/like.png">
-        <div>1234</div>
+        <div id="likes"></div>
       </div>
       <div id="commentBtn">
         <img  src="img/comment.png">
@@ -36,15 +34,36 @@
         +关注
       </div>
     </div>
-    <video id="myVideo" src="video/v2.mp4" controls="controls"></video>
+    <!--<video id="myVideo" src="video/v2.mp4" controls="controls"></video>-->
   </div>
 
   <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
   <script src="../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script>
     $(function () {
-      
-    });
+      // var domainUrl = '/api/';
+      var domainUrl = 'http://dev.api.acdors.com/';
+
+      $.ajax({
+        type: "get",
+        url: domainUrl + 'web/share',
+        async: true,
+        data:{uid: 49, did: 68},
+        dataType: "json",
+        success: function (data) {
+          var ossUrl = data.ossUrl;
+          var data = data.videoinfo;
+
+          var $img = '<img src="' + ossUrl +  data.avatar + '" alt="头像">';
+          $('#profilePic').append($img);
+          $('#likes').append(data.like_count);
+
+          var $video = '<video id="myVideo" src="' + data.video_src +
+            '" controls="controls"></video>';
+          $('#wrapper').append($video);
+        }
+      }); //$.ajax
+    }); // $(function())
   </script>
 
 </body>
