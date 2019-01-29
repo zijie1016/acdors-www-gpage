@@ -94,7 +94,7 @@
         type: "get",
         url: domainUrl + 'web/share',
         async: true,
-        data:{uid: 49, did: 68},
+        data:{did: 68, uid: 49},
         dataType: "json",
         success: function (data) {
           var ossUrl = data.ossUrl;
@@ -116,7 +116,7 @@
             ' x5-video-player-type="h5"' +
             ' x5-video-orientation="portraint"' +
             ' x5-video-player-fullscreen="false"' +
-            ' poster="' + ossUrl + data.avatar + '" ' +
+            ' poster="' + data.image_src + '" ' +
             ' controls="controls"></video>';
           $('#wrapper').append($video);
         }
