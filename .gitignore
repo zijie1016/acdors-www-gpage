@@ -4,3 +4,5 @@ simple-git-manual.txt
 ~*
 *.swp
 *.swo
+.gitignore
+.git/
