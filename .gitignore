@@ -3,6 +3,10 @@ simple-git-manual.txt
 *~
 ~*
 *.swp
+<<<<<<< HEAD
 *.swo
 .gitignore
 .git/
+=======
+*.swo
+>>>>>>> 7857
