@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1"/>
@@ -7,38 +7,66 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
   <link rel="icon" href="/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
-  <link rel="stylesheet" href="../plugin/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/share.css">
   <title>星榜戏逗 - 你，绝对有戏</title>
   <style>
-
+    #ui-dock, #ui-dock * {
+      /*border: 1px dashed yellow;*/
+    }
+    #profile-dock, #profile-dock * {
+      border: 1px dashed yellow;
+    }
+    #profile-dock * {
+      /*float: left;*/
+    }
   </style>
 </head>
 <body>
   <div id="wrapper">
-    <div id="shareUI">
-      <div id="profilePic"> </div>
-      <div id="likeBtn">
-        <img  src="img/like.png">
-        <div id="likes"></div>
+
+    <div id="ui-dock">
+      <div class="share-ui">
+        <div id="like-btn" class="share-btn">
+          <img  src="img/likes-red.png" alt="赞">
+        </div>
+        <div id="likes" class="share-btn-text"></div>
       </div>
-      <div id="commentBtn">
-        <img  src="img/comment.png">
-        <div>评论</div>
+      <div class="share-ui">
+        <div id="comments-btn" class="share-btn">
+          <img src="img/comments.png" alt="评论">
+        </div>
+        <div id="comments" class="share-btn-text"></div>
       </div>
-      <div id="shareBtn">
-        <img src="img/share.png">
-        <div>分享</div>
+      <div class="share-ui">
+        <div class="share-btn">
+          <img src="img/share.png" alt="分享">
+        </div>
       </div>
-      <div id="follow">
-        +关注
-      </div>
-    </div>
-    <!--<video id="myVideo" src="video/v2.mp4" controls="controls"></video>-->
-  </div>
+    </div> <!-- #ui-dock -->
+
+    <div id="profile-dock">
+      <div id="profile-pic"></div>
+      <table>
+        <tr>
+          <td>
+            <div id="author-name">黄晓明</div>
+            <div id="follow">
+              <div>+关注</div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td id="video-info">黄晓明发布的视频黄晓明发布的的视频黄晓明发布的视频视频黄晓明发布的视频</td>
+        </tr>
+      </table>
+      <!--<div>黄晓明</div>-->
+      <!--<div>+关注</div>-->
+      <!--<div id="video-info">黄晓明发布的视频黄晓明发布的视频黄晓明发布的视频</div>-->
+    </div> <!-- #profile-dock -->
+
+  </div> <!-- #wrapper -->
 
   <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
-  <script src="../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script>
     $(function () {
       // var domainUrl = '/api/';
@@ -54,9 +82,11 @@
           var ossUrl = data.ossUrl;
           var data = data.videoinfo;
 
-          var $img = '<img src="' + ossUrl +  data.avatar + '" alt="头像">';
-          $('#profilePic').append($img);
           $('#likes').append(data.like_count);
+          $('#comments').append(data.comment_count);
+
+          var $img = '<img src="' + ossUrl +  data.avatar + '" alt="头像">';
+          $('#profile-pic').append($img);
 
           var $video = '<video id="vid" src="' + data.video_src +
             '" webkit-playsinline="true"' +
