@@ -4,16 +4,16 @@ html, body {
 }
 
 #wrapper {
-    display: block;
     position: fixed;
     background-color: #333;
-    width: 100%;
+    width: auto;
     height: 100%;
-    margin: 0;
+    /*margin: 0 auto;*/
     padding: 0;
 }
 #shareUI {
-    position: relative;
+    position: absolute;
+    top: 10px;
     height: 50px;
     max-width: 420px;
     margin: 0 auto;
@@ -66,12 +66,12 @@ html, body {
     color: #eee;
     font-size: 11px;
 }
-#myVideo {
+#vid {
     position: absolute;
-    top: 5px;
+    top: 0;
     width: 100%;
-    height: 91%;
+    height: 100%;
     z-index: 90;
-    object-fit: fill;
+    /*object-fit: fill;*/
 }
 
