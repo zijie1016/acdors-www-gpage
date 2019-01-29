@@ -14,15 +14,35 @@
       /*border: 1px dashed yellow;*/
     }
     #profile-dock, #profile-dock * {
-      border: 1px dashed yellow;
+      /*border: 1px dashed yellow;*/
     }
     #profile-dock * {
       /*float: left;*/
+    }
+    #cover, #cover * {
+      /*border: 1px dashed yellow;*/
     }
   </style>
 </head>
 <body>
   <div id="wrapper">
+    <div id="cover">
+      <table cellspacing="0">
+        <tr>
+          <td id="logo">
+            <div>
+              <img src="../img/logo.png" alt="logo">
+            </div>
+          </td>
+          <td id="slogan">
+            <div>你，绝对有戏</div>
+          </td>
+          <td id="open">
+            <div>打开</div>
+          </td>
+        </tr>
+      </table>
+    </div>
 
     <div id="ui-dock">
       <div class="share-ui">
@@ -49,28 +69,26 @@
       <table>
         <tr>
           <td>
-            <div id="author-name">黄晓明</div>
+            <div id="author-name"></div>
             <div id="follow">
               <div>+关注</div>
             </div>
           </td>
         </tr>
         <tr>
-          <td id="video-info">黄晓明发布的视频黄晓明发布的的视频黄晓明发布的视频视频黄晓明发布的视频</td>
+          <td>
+            <div id="video-info"></div>
+          </td>
         </tr>
       </table>
-      <!--<div>黄晓明</div>-->
-      <!--<div>+关注</div>-->
-      <!--<div id="video-info">黄晓明发布的视频黄晓明发布的视频黄晓明发布的视频</div>-->
     </div> <!-- #profile-dock -->
 
   </div> <!-- #wrapper -->
 
   <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
+  <script src="../js/acdors.js"></script>
   <script>
     $(function () {
-      // var domainUrl = '/api/';
-      var domainUrl = 'http://dev.api.acdors.com/';
 
       $.ajax({
         type: "get",
@@ -82,19 +100,24 @@
           var ossUrl = data.ossUrl;
           var data = data.videoinfo;
 
-          $('#likes').append(data.like_count);
-          $('#comments').append(data.comment_count);
+          $('#likes').append(data.like_count);  //点赞数
+          $('#comments').append(data.comment_count); //评论数
 
           var $img = '<img src="' + ossUrl +  data.avatar + '" alt="头像">';
-          $('#profile-pic').append($img);
+          $('#profile-pic').append($img); //用户头像
 
+          $('#author-name').append(data.nickname); //用户名
+          $('#video-info').append(data.video_info); //视频介绍
+
+          //视频资源
           var $video = '<video id="vid" src="' + data.video_src +
             '" webkit-playsinline="true"' +
             ' playsinline="true"' +
             ' x5-video-player-type="h5"' +
             ' x5-video-orientation="portraint"' +
             ' x5-video-player-fullscreen="false"' +
-            '" controls="controls"></video>';
+            ' poster="' + ossUrl + data.avatar + '" ' +
+            ' controls="controls"></video>';
           $('#wrapper').append($video);
         }
       }); //$.ajax
