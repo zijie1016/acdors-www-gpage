@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1"/>
@@ -7,59 +7,117 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
   <link rel="icon" href="/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
-  <link rel="stylesheet" href="../plugin/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/share.css">
   <title>星榜戏逗 - 你，绝对有戏</title>
   <style>
-
+    #ui-dock, #ui-dock * {
+      /*border: 1px dashed yellow;*/
+    }
+    #profile-dock, #profile-dock * {
+      /*border: 1px dashed yellow;*/
+    }
+    #profile-dock * {
+      /*float: left;*/
+    }
+    #cover, #cover * {
+      /*border: 1px dashed yellow;*/
+    }
   </style>
 </head>
 <body>
   <div id="wrapper">
-    <div id="shareUI">
-      <div id="profilePic"> </div>
-      <div id="likeBtn">
-        <img  src="img/like.png">
-        <div id="likes"></div>
-      </div>
-      <div id="commentBtn">
-        <img  src="img/comment.png">
-        <div>评论</div>
-      </div>
-      <div id="shareBtn">
-        <img src="img/share.png">
-        <div>分享</div>
-      </div>
-      <div id="follow">
-        +关注
-      </div>
+    <div id="cover">
+      <table cellspacing="0">
+        <tr>
+          <td id="logo">
+            <div>
+              <img src="../img/logo.png" alt="logo">
+            </div>
+          </td>
+          <td id="slogan">
+            <div>你，绝对有戏</div>
+          </td>
+          <td id="open">
+            <div>打开</div>
+          </td>
+        </tr>
+      </table>
     </div>
-    <!--<video id="myVideo" src="video/v2.mp4" controls="controls"></video>-->
-  </div>
+
+    <div id="ui-dock">
+      <div class="share-ui">
+        <div id="like-btn" class="share-btn">
+          <img  src="img/likes-red.png" alt="赞">
+        </div>
+        <div id="likes" class="share-btn-text"></div>
+      </div>
+      <div class="share-ui">
+        <div id="comments-btn" class="share-btn">
+          <img src="img/comments.png" alt="评论">
+        </div>
+        <div id="comments" class="share-btn-text"></div>
+      </div>
+      <div class="share-ui">
+        <div class="share-btn">
+          <img src="img/share.png" alt="分享">
+        </div>
+      </div>
+    </div> <!-- #ui-dock -->
+
+    <div id="profile-dock">
+      <div id="profile-pic"></div>
+      <table>
+        <tr>
+          <td>
+            <div id="author-name"></div>
+            <div id="follow">
+              <div>+关注</div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="video-info"></div>
+          </td>
+        </tr>
+      </table>
+    </div> <!-- #profile-dock -->
+
+  </div> <!-- #wrapper -->
 
   <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
-  <script src="../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="../js/acdors.js"></script>
   <script>
     $(function () {
-      // var domainUrl = '/api/';
-      var domainUrl = 'http://dev.api.acdors.com/';
 
       $.ajax({
         type: "get",
         url: domainUrl + 'web/share',
         async: true,
-        data:{uid: 49, did: 68},
+        data:{did: 68, uid: 49},
         dataType: "json",
         success: function (data) {
           var ossUrl = data.ossUrl;
           var data = data.videoinfo;
 
-          var $img = '<img src="' + ossUrl +  data.avatar + '" alt="头像">';
-          $('#profilePic').append($img);
-          $('#likes').append(data.like_count);
+          $('#likes').append(data.like_count);  //点赞数
+          $('#comments').append(data.comment_count); //评论数
 
-          var $video = '<video id="myVideo" src="' + data.video_src +
-            '" controls="controls"></video>';
+          var $img = '<img src="' + ossUrl +  data.avatar + '" alt="头像">';
+          $('#profile-pic').append($img); //用户头像
+
+          $('#author-name').append(data.nickname); //用户名
+          $('#video-info').append(data.video_info); //视频介绍
+
+          //视频资源
+          var $video = '<video id="vid" src="' + data.video_src +
+            '" webkit-playsinline="true"' +
+            ' playsinline="true"' +
+            ' x5-video-player-type="h5"' +
+            ' x5-video-orientation="portraint"' +
+            ' x5-video-player-fullscreen="false"' +
+            ' poster="' + data.image_src + '" ' +
+            ' controls="controls"></video>';
           $('#wrapper').append($video);
         }
       }); //$.ajax
