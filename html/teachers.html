@@ -158,9 +158,11 @@
           } // for
 
           // 师资轮播图 swiperjs 配置
+          var tsAutoplayFrequence = 6000;
+          var tsSpeed = 800;
           var teacherSlides = $('#teacher-slides .swiper-container').swiper({
-            // loop:true,
-            autoplay: 2000,
+            autoplay: tsAutoplayFrequence,
+            speed: tsSpeed,
             autoplayDisableOnInteraction: true,
             grabCursor: true,
             slidesPerView: 3,
@@ -168,6 +170,9 @@
             watchActiveIndex: true,
             onSlideChangeStart: function () {
               updateTeacherInfo(teacherSlides.activeLoopIndex);
+            },
+            onTouchEnd: function(){
+              teacherSlides.swipeNext();
             }
           });
           $('#teacher-slides .arrow-left-white').on('click', function(e){
@@ -182,19 +187,19 @@
 
           // 老师介绍 swiperjs 配置
           var teacherInfoSlides = $('#teacher-info-slides .swiper-container').swiper({
-            // loop:true,
-            autoplay: 2000,
+            autoplay: tsAutoplayFrequence,
+            speed: tsSpeed,
             autoplayDisableOnInteraction: true,
             slidesPerView: 1,
             centeredSlides: true,
             grabCursor: true,
             onSlideChangeStart: function(){ //teacherInfo和teachersCarousel互相控制
-              teacherSlides.swipeTo(teacherInfoSlides.activeLoopIndex, 400, false);
-            }
+              teacherSlides.swipeTo(teacherInfoSlides.activeLoopIndex, tsSpeed, false);
+            },
           });
 
           function updateTeacherInfo(index) {
-            teacherInfoSlides.swipeTo(index, 400, false);
+            teacherInfoSlides.swipeTo(index, tsSpeed, false);
           }
 
         }
