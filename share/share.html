@@ -6,7 +6,7 @@
   <meta name="renderer" content="webkit"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
   <link rel="icon" href="/favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
+  <link rel="stylesheet" href="../plugin/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/share.css">
   <title>星榜戏逗 - 你，绝对有戏</title>
 </head>
@@ -69,18 +69,26 @@
       </table>
     </div> <!-- #profile-dock -->
 
+    <div id="modal" class="modal fade dim">
+        <div class="modal-content">
+          <a href="http://www.acdors.com">了解更多 >></a>
+        </div>
+    </div> <!-- #modal -->
+
   </div> <!-- #wrapper -->
 
   <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
+  <script src="../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="../js/acdors.js"></script>
   <script>
-    $(function () {
+    jQuery.noConflict();
+    jQuery(function ($) {
       // 请求数据
       $.ajax({
         type: "get",
         url: domainUrl + 'web/share',
         async: true,
-        data:{did: 68, uid: 49},
+        data:{did: 21, uid: 1},
         dataType: "json",
         success: function (data) {
           var ossUrl = data.ossUrl;
@@ -110,6 +118,12 @@
 
       // 点击三个UI后跳转（官网或app下载页）
       $('.touchable').click(function(){
+        $('#modal').modal({
+          backdrop: false
+        });
+      });
+      $('#modal').click(function(){
+        $(this).modal('hide');
       });
 
     }); // $(function())
