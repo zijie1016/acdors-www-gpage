@@ -83,12 +83,15 @@
   <script>
     jQuery.noConflict();
     jQuery(function ($) {
+      var uid = GetQueryString('uid');
+      var did = GetQueryString('did');
+
       // 请求数据
       $.ajax({
         type: "get",
         url: domainUrl + 'web/share',
         async: true,
-        data:{did: 21, uid: 1},
+        data:{uid: uid, did: did},
         dataType: "json",
         success: function (data) {
           var ossUrl = data.ossUrl;
