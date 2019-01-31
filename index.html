@@ -356,23 +356,36 @@
           // 请求合作机构数据
           var orgInfo = data.organinfo;
 
-          for(var i=0, length=orgInfo.length; i< (length<3 ? length : 3); ++i) { //最多展示三个机构
+          for(var i=0, length=orgInfo.length<4 ? orgInfo.length : 3; i< length; ++i) { //最多展示四个机构, 暂且只显示三个
 
-            // 根据返回的机构数量偏移图标，达到居中效果，最多一行三个
-            var $introThumb = '<a class="col-xs-4';
+            // 根据返回的机构数量偏移图标，达到居中效果，最多一行四个
+            var $introThumb = '<a class="';
             if(i == 0) {
               switch (length) {
                 case 1:
-                  $introThumb += ' col-xs-offset-4" ';
+                  $introThumb += 'col-xs-4 col-xs-offset-4" ';
                   break;
                 case 2:
-                  $introThumb += ' col-xs-offset-2" ';
+                  $introThumb += 'col-xs-4 col-xs-offset-2" ';
+                  break;
+                case 3: 
+                  $introThumb += 'col-xs-4" ';
                   break;
                 default:
-                  $introThumb += '" '; //默认一行三个机构
+                  $introThumb += 'col-xs-3" '; //默认一行四个机构
                   break;
               }
             } else {
+              switch (length) {
+                case 1:
+                case 2:
+                case 3:
+                  $introThumb += 'col-xs-4';
+                  break;
+                default: 
+                  $introThumb += 'col-xs-3';
+                  break;
+              }
               $introThumb += '" ';
             }
 

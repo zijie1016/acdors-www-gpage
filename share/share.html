@@ -12,7 +12,7 @@
 </head>
 <body>
   <div id="wrapper">
-    <div id="cover">
+    <div id="cover" class="touchable">
       <table cellspacing="0">
         <tr>
           <td id="logo">
@@ -28,9 +28,9 @@
           </td>
         </tr>
       </table>
-    </div>
+    </div> <!-- #cover -->
 
-    <div id="ui-dock">
+    <div id="ui-dock" class="touchable">
       <div class="share-ui">
         <div id="like-btn" class="share-btn">
           <img  src="img/likes-red.png" alt="赞">
@@ -50,7 +50,7 @@
       </div>
     </div> <!-- #ui-dock -->
 
-    <div id="profile-dock">
+    <div id="profile-dock" class="touchable">
       <div id="profile-pic"></div>
       <table>
         <tr>
@@ -75,7 +75,7 @@
   <script src="../js/acdors.js"></script>
   <script>
     $(function () {
-
+      // 请求数据
       $.ajax({
         type: "get",
         url: domainUrl + 'web/share',
@@ -107,6 +107,11 @@
           $('#wrapper').append($video);
         }
       }); //$.ajax
+
+      // 点击三个UI后跳转（官网或app下载页）
+      $('.touchable').click(function(){
+      });
+
     }); // $(function())
   </script>
 

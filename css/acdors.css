@@ -284,9 +284,6 @@ body {
 /* ==============================
     首页-合作机构
    ============================== */
-#partner-orgs, #partner-orgs * {
-    /*border: 1px dashed blue;*/
-}
 #partner-orgs{
     margin-top: 50px;
 }
@@ -309,13 +306,17 @@ body {
     border: 3px solid #ff5a00;
 }
 #partner-orgs .intro-thumb p {
+    margin-top: 10px;
     margin-left: -20px;
     margin-right: -20px;
-    /*max-width: 150px;*/
+    line-height: 180%
 }
 @media screen and (min-width: 768px) {
     #partner-orgs .intro-thumb {
         padding: 20px 40px 0;
+    }
+    #partner-orgs .intro-thumb p {
+        line-height: 250%;
     }
 }
 @media screen and (min-width: 992px) {
