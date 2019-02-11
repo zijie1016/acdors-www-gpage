@@ -21,7 +21,7 @@
 <body>
 
   <!-------------------------------- 首页轮播图 -------------------------------->
-  <div id="index-slides" class="main-carousel">
+  <div id="main-slides" class="main-carousel">
     <div class="swiper-container">
       <div class="swiper-wrapper">
       </div>
@@ -115,87 +115,32 @@
     "use strict";
 
     $(function () {
-      // 插入导航栏,页脚
-      createNavbar(1);
-      createFooter();
+      //创建页面公共组件
+      createCommonComponents(1);
 
-      //请求大轮播图数据
-      $.ajax({
-        type: "get",
+      // 请求首页大轮播图数据
+      ajaxGet({
         url: domainUrl + 'web/banner',
-        async: true,
         data:{banner_area: 1},
-        dataType: "json",
-        success: function (data) {
-          data = data.data;
-          for (var i=0, length=data.length; i<length; ++i) {
-            var $slides = '<div class="swiper-slide">' +
-              '<img src="' + ossUrl + data[i].banner + '" alt="首页轮播图">' +
-              '</div>';
-            $('#index-slides .swiper-wrapper').append($slides);
-          }
-
-          // 首页主轮播图
-          var pagi = '';
-          var loop = false;
-          var autoplay = 0;
-
-          // 多于一张图才显示翻页按钮,自动循环
-          if(data.length > 1) {
-            pagi = '.pagination';
-            loop = true;
-            autoplay = 5000;
-          }
-          var indexSlides = $('#index-slides .swiper-container').swiper({
-            pagination: pagi,
-            loop: loop,
-            autoplay: autoplay,
-            speed: 1000,
-            grabCursor: true,
-            paginationClickable: true,
-            slidesPerView: 1,
-            centeredSlides: true
-          }); // swiper({})
+        success: function(data){
+          getBannerSlides(data, '#main-slides');
         } // success
-      }); // $.ajax 请求大轮播图数据
+      }); // ajaxGet()
 
       // 请求热门剧组和合作机构数据
-      $.ajax({
-        type: "get",
+      ajaxGet({
         url: domainUrl + 'web/indexs',
-        async: true,
-        dataType: "json",
         success: function (data) {
           data = data.data;
 
           // 请求热门剧组数据
           if(data.isnull) { //后台没有上传热门剧组数据，展示"敬请期待"图片
-            var $img = '<img class="img-responsive" src="./img/tba.png" alt="敬请期待">';
-            $('#hot > #img-tba').append($img);
+            showTBA('#hot');
           } else
           { //请求到了热门剧组数据
 
-            /* ================================
-                热门剧组 - 剧组图片与简单剧组信息
-               ================================ */
-            var crewPicUrl = ossUrl + data.crew.crew_picurl;
-            var $introBlk = '<div class="row intro-blk">' +
-                '<div class="intro-img col-xs-12 col-md-7">' +
-                  '<img class="img-responsive" src="' + crewPicUrl + '" alt="剧组图片">' +
-                '</div>' +
-                '<div class="intro-text col-xs-12 col-md-5">' +
-                  '<h3>' + data.crew.crew_name + '</h3>' +
-                  '<p>' +
-                    '剧组类型：' + data.crew.crew_type + '<br>' +
-                    '导演：' + data.crew.crew_director + '<br>' +
-                    '制作公司：' + data.crew.crew_producer + '<br>' +
-                    '出品方：' + data.crew.crew_investor + '<br>' +
-                    '开机日期：' + data.crew.crew_bootime + '<br>' +
-                    '拍摄地点：' + data.crew.crew_position +
-                  '</p>' +
-                '</div>' +
-              '</div>';
-            $('#hot').append($introBlk);
+            // 热门剧组 - 剧组图片与简单剧组信息,不带查看详情链接
+            getIntroBlk(data, '#hot', false);
 
             if(data.actor[0].information != "") {
 

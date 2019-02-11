@@ -41,9 +41,8 @@
   <script>
     "use strict";
     $(function () {
-      // 插入导航栏,页脚
-      createNavbar(5);
-      createFooter();
+      //创建页面公共组件
+      createCommonComponents(5);
 
       $.ajax({
         type: "get",

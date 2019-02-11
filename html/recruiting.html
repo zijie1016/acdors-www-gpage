@@ -58,89 +58,34 @@
   <script src="../js/acdors.js"></script>
   <script>
     $(function () {
-      // 插入导航栏、页脚
-      createNavbar(2);
-      createFooter();
+      //创建页面公共组件
+      createCommonComponents(2);
 
       // 请求活动大轮播图
-      $.ajax({
-        type: "get",
+      ajaxGet({
         url: domainUrl + 'web/banner',
-        async: true,
-        data:{banner_area: 2},
-        dataType: "json",
-        success: function (data) {
-          data = data.data;
-          for (var i=0, length=data.length; i<length; ++i) {
-            var $slides = '<div class="swiper-slide">' +
-              '<img src="' + ossUrl + data[i].banner + '" alt="首页轮播图">' +
-              '</div>';
-            $('#event-slides .swiper-wrapper').append($slides);
-          }
-
-          // 剧组招募 - 活动轮播图
-          var pagi = '';
-          var loop = false;
-          var autoplay = 0;
-
-          // 多于一张图才显示翻页按钮,自动循环
-          if(data.length > 1) {
-            pagi = '.pagination';
-            loop = true;
-            autoplay = 5000;
-          }
-
-          var eventSlides = $('#event-slides .swiper-container').swiper({
-            pagination: pagi,
-            loop: loop,
-            autoplay: autoplay,
-            speed: 1000,
-            grabCursor: true,
-            paginationClickable: true,
-            slidesPerView: 1,
-            centeredSlides: true
-          });
+        data: {banner_area: 2},
+        success: function(data){
+          getBannerSlides(data, '#event-slides');
         } // success
-      }); // $.ajax 请求活动大轮播图
+      }); // ajaxGet()
 
-      //$.ajax 请求剧组信息
-      $.ajax({
-        type: "get",
+      //请求推荐剧组信息
+      ajaxGet({
         url: domainUrl + 'web/drama',
-        async: true,
-        dataType: "json",
         success: function (data) {
           var isnull = data.isnull;
 
           // 请求推荐剧组数据
           if(isnull) { //后台没有上传剧组数据，展示"敬请期待"图片
-            var $img = '<img class="img-responsive" src="../img/tba.png" alt="敬请期待">';
-            $('#hot-recommend > #img-tba').append($img);
+            showTBA('#hot-recommend');
           }
           else { //请求到了剧组数据
             data = data.data;
 
-            /* ================================
-             剧组招募 - 剧组图片与简单剧组信息
-            ================================ */
-            var $introBlk = '<div class="row intro-blk">' +
-                '<div class="intro-img col-xs-12 col-md-7">' +
-                  '<img class="img-responsive" src="' + ossUrl + data.crew.crew_picurl + '" alt="剧组图片">' +
-                '</div>' +
-                '<div class="intro-text col-xs-12 col-md-5">' +
-                  '<h3>' + data.crew.crew_name + '</h3>' +
-                  '<p>' +
-                    '剧组类型：' + data.crew.crew_type + '<br>' +
-                    '导演：' + data.crew.crew_director + '<br>' +
-                    '制作公司：' + data.crew.crew_producer + '<br>' +
-                    '出品方：' + data.crew.crew_investor + '<br>' +
-                    '开机日期：' + data.crew.crew_bootime + '<br>' +
-                    '拍摄地点：' + data.crew.crew_position +
-                  '</p>' +
-                '</div>' +
-                '<a class="col-xs-12 col-md-5" href="crew-info.html">查看剧组详情</a>' +
-              '</div>';
-            $('#hot-recommend').append($introBlk);
+            // 剧组招募 - 剧组图片与简单剧组信息,带查看详情链接
+            getIntroBlk(data, '#hot-recommend', true);
+
              // 剧故事梗概
             var $story = '<div class="simple-text">' +
                 '<h4>故事梗概：</h4>' +

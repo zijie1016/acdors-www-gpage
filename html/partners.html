@@ -38,9 +38,8 @@
   <script src="../js/acdors.js"></script>
   <script>
     $(function () {
-      // 插入导航栏,页脚
-      createNavbar(3);
-      createFooter();
+      //创建页面公共组件
+      createCommonComponents(3);
 
       $.ajax({
         type: "get",

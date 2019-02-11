@@ -48,9 +48,8 @@
   <script src="../js/acdors.js"></script>
   <script>
     $(function () {
-      // 插入导航栏、页脚
-      createNavbar(4);
-      createFooter();
+      //创建页面公共组件
+      createCommonComponents(4);
 
       // 请求老师图片
       $.ajax({
