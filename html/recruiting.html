@@ -87,11 +87,12 @@
             getIntroBlk(data, '#hot-recommend', true);
 
              // 剧故事梗概
-            var $story = '<div class="simple-text">' +
-                '<h4>故事梗概：</h4>' +
-                '<p>' + data.crew.introduction + '</p>' +
-              '</div>';
-            $('#hot-recommend').append($story);
+            // var $story = '<div class="simple-text">' +
+            //     '<h4>故事梗概：</h4>' +
+            //     '<p>' + data.crew.introduction + '</p>' +
+            //   '</div>';
+            // $('#hot-recommend').append($story);
+            getStory(data, '#hot-recommend');
 
             if(data.actor[0].information != "") { //如果没有返回演员的数据，就完全不展示轮播图
 

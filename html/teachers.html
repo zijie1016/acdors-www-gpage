@@ -52,11 +52,8 @@
       createCommonComponents(4);
 
       // 请求老师图片
-      $.ajax({
-        type: "get",
+      ajaxGet({
         url: domainUrl + 'web/teacher',
-        async: true,
-        dataType: "json",
         success: function (data) {
           data = data.data;
 
@@ -68,38 +65,7 @@
             $('#teacher-slides .swiper-wrapper').append($teacherSlide);
 
             // 请求对应老师的信息
-            var gender = data[i].gender == 1 ? '男' : '女';
-            var $teacherInfo = '<div class="swiper-slide">' +
-                '<table class="profile-info">' +
-                  '<thead>' +
-                    '<tr><th colspan="2"><h3>' + data[i].name + '</h3></th></tr>' +
-                  '</thead>' +
-                  '<tbody>' +
-                    '<tr>' +
-                      '<th>性别：</th>' +
-                      '<td>' + gender + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                      '<th>职业：</th>' +
-                      '<td>' + data[i].profession + '</td>' +
-                    '</tr>';
-
-            if (data[i].creation != "") // 如果没有作品，就不显示此行
-            {
-              $teacherInfo += '<tr>' +
-                '<th>作品：</th>' +
-                '<td>' + data[i].creation + '</td>' +
-                '</tr>';
-            }
-
-            $teacherInfo += '<tr>' +
-                      '<th>简介：</th>' +
-                      '<td>' + data[i].content + '</td>' +
-                    '</tr>' +
-                  '</tbody>' +
-                '</table>' +
-              '</div>';
-              $('#teacher-info-slides .swiper-wrapper').append($teacherInfo);
+            getSlideText(data[i], '#teacher-info-slides');
           } // for
 
           // 师资轮播图 swiperjs 配置

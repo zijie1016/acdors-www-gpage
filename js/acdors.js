@@ -140,3 +140,49 @@ function showTBA(containerId){
   var $img = '<img class="img-responsive" src="/img/tba.png" alt="敬请期待">';
   $(containerId + ' > #img-tba').append($img)
 }
+
+// 请求剧组故事梗概
+function getStory(data, containerId){
+  var $story = '<div class="simple-text">' +
+                '<h4>故事梗概：</h4>' +
+                '<p>' + data.crew.introduction + '</p>' +
+              '</div>';
+  $(containerId).append($story);
+}
+
+// 请求轮播介绍文本
+function getSlideText(data, containerId){
+  var $slideText = '<div class="swiper-slide">' +
+      '<table class="profile-info">' +
+        '<thead>' +
+          '<tr><th colspan="2"><h3>' + data.name + '</h3></th></tr>' +
+        '</thead>' +
+        '<tbody>';
+  if(data.gender != ""){ // 如果没有性别数据，不显示此行
+    $slideText += '<tr>' +
+      '<th>性别：</th>' +
+      '<td>' + ((data.gender == 1) ? '男' : '女') + '</td>' +
+    '</tr>'; 
+  }
+  $slideText += '<tr>' +
+            '<th>职业：</th>' +
+            '<td>' + data.profession + '</td>' +
+          '</tr>';
+
+  if (data.creation != "") // 如果没有作品，就不显示此行
+  {
+    $slideText += '<tr>' +
+      '<th>作品：</th>' +
+      '<td>' + data.creation + '</td>' +
+      '</tr>';
+  }
+
+  $slideText += '<tr>' +
+            '<th>简介：</th>' +
+            '<td>' + data.content + '</td>' +
+          '</tr>' +
+        '</tbody>' +
+      '</table>' +
+    '</div>';
+  $(containerId + ' .swiper-wrapper').append($slideText);
+}
