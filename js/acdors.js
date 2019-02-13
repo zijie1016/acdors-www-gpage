@@ -2,7 +2,8 @@
 
 // URL全局变量
 var ossUrl = 'https://acdors.oss-cn-beijing.aliyuncs.com/';
-var domainUrl = '/api/';
+var domainUrl = 'http://dev.api.acdors.com/';
+// var domainUrl = '/api/';
 
 //获取查询字符串
 function GetQueryString(name)
