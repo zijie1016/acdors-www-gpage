@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>关于</title>
+  <style>
+    #wrapper{
+      width: 98%;
+      margin: 5px auto;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="wrapper">
+    <p>
+
+    </p>
+  </div>
+
+  <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
+  <script src="../js/acdors.js"></script>
+  <script>
+    $(function(){
+
+      $.ajax({
+        type: "get",
+        async: true,
+        url: domainUrl + 'my/setting',
+        data: {id: GetQueryString("id")},
+        dataType: "json",
+        success: function(data){
+          content = data.data.content;
+          $('#wrapper > p').append(content);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
