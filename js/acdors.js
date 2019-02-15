@@ -2,7 +2,8 @@
 
 // URL全局变量
 var ossUrl = 'https://acdors.oss-cn-beijing.aliyuncs.com/';
-var domainUrl = '/api/';
+// var domainUrl = '/api/';
+var domainUrl = 'http://dev.api.acdors.com/';
 
 //获取查询字符串
 function GetQueryString(name)
@@ -111,20 +112,20 @@ function getBannerSlides(data, slideId){
 
 // 请求剧组信息（图片与简单信息）
 function getIntroBlk(data, containerId, seeMore){
-  var crew = data.crew;
+  var crewinfo = data.crewinfo;
   var $introBlk = '<div class="row intro-blk">' +
       '<div class="intro-img col-xs-12 col-md-7">' +
-        '<img class="img-responsive" src="' + ossUrl + crew.crew_picurl + '" alt="剧组图片">' +
+        '<img class="img-responsive" src="' + ossUrl + crewinfo.crew_picurl + '" alt="剧组图片">' +
       '</div>' +
       '<div class="intro-text col-xs-12 col-md-5">' +
-        '<h3>' + crew.crew_name + '</h3>' +
+        '<h3>' + crewinfo.crew_name + '</h3>' +
         '<p>' +
-          '剧组类型：' + crew.crew_type + '<br>' +
-          '导演：' + crew.crew_director + '<br>' +
-          '制作公司：' + crew.crew_producer + '<br>' +
-          '出品方：' + crew.crew_investor + '<br>' +
-          '开机日期：' + crew.crew_bootime + '<br>' +
-          '拍摄地点：' + crew.crew_position +
+          '剧组类型：' + crewinfo.crew_type + '<br>' +
+          '导演：' + crewinfo.crew_director + '<br>' +
+          '制作公司：' + crewinfo.crew_producer + '<br>' +
+          '出品方：' + crewinfo.crew_investor + '<br>' +
+          '开机日期：' + crewinfo.crew_bootime + '<br>' +
+          '拍摄地点：' + crewinfo.crew_position +
         '</p>' +
       '</div>';
   if(seeMore){ // 如果可以查看详情，加一个链接
@@ -144,7 +145,7 @@ function showTBA(containerId){
 function getStory(data, containerId){
   var $story = '<div class="simple-text">' +
                 '<h4>故事梗概：</h4>' +
-                '<p>' + data.crew.introduction + '</p>' +
+                '<p>' + data.crewinfo.introduction + '</p>' +
               '</div>';
   $(containerId).append($story);
 }
@@ -157,31 +158,71 @@ function getSlideText(data, containerId){
           '<tr><th colspan="2"><h3>' + data.name + '</h3></th></tr>' +
         '</thead>' +
         '<tbody>';
-  if(data.gender != ""){ // 如果没有性别数据，不显示此行
-    $slideText += '<tr>' +
-      '<th>性别：</th>' +
-      '<td>' + ((data.gender == 1) ? '男' : '女') + '</td>' +
-    '</tr>'; 
-  }
-  $slideText += '<tr>' +
-            '<th>职业：</th>' +
-            '<td>' + data.profession + '</td>' +
-          '</tr>';
-
-  if (data.creation != "") // 如果没有作品，就不显示此行
-  {
-    $slideText += '<tr>' +
-      '<th>作品：</th>' +
-      '<td>' + data.creation + '</td>' +
-      '</tr>';
-  }
-
-  $slideText += '<tr>' +
-            '<th>简介：</th>' +
-            '<td>' + data.content + '</td>' +
-          '</tr>' +
-        '</tbody>' +
+  $slideText += getSlideTextRow('性别', ((data.gender == 1) ? '男' : '女'));
+  $slideText += getSlideTextRow('职业', data.profession);
+  $slideText += getSlideTextRow('饰演', data.role);
+  $slideText += getSlideTextRow('作品', data.creation); //老师的作品
+  $slideText += getSlideTextRow('作品', data.experiment); //明星的作品
+  $slideText += getSlideTextRow('简介', data.content);
+  $slideText += '</tbody>' +
       '</table>' +
     '</div>';
   $(containerId + ' .swiper-wrapper').append($slideText);
+}
+// 获取轮播介绍文本每一行
+function getSlideTextRow(rowHead, rowData){
+  var $str = "";
+  if(rowData!="" && rowData!=undefined){ //如果没有数据，则不显示此行
+    $str = '<tr>' +
+            '<th>' + rowHead + '：</th>' +
+            '<td>' + rowData + '</td>' +
+          '</tr>';
+  }
+  return $str;
+}
+
+// 关联轮播图（图->文）的swiper.js配置
+function setBoundSlides(settings){
+  //图片轮播 swiperjs配置
+  var imgSlides = $(settings.imgSlidesSelector + ' .swiper-container').swiper({
+    autoplay: settings.frequency,
+    speed: settings.speed,
+    autoplayDisableOnInteraction: true,
+    grabCursor: true,
+    slidesPerView: 3,
+    centeredSlides: true,
+    watchActiveIndex: true,
+    onSlideChangeStart: function () {
+      updateTeacherInfo(imgSlides.activeIndex);
+    },
+    onTouchEnd: function(){
+      imgSlides.swipeNext();
+    }
+  });
+  var arrowColor = settings.arrowColor=='' ? '' : '-' + settings.arrowColor; // 左右翻页箭头图标可选
+  $(settings.imgSlidesSelector + ' .arrow-left' + arrowColor).on('click', function(e){
+    e.preventDefault();
+    imgSlides.swipePrev();
+  });
+  $(settings.imgSlidesSelector + ' .arrow-right' + arrowColor).on('click', function(e){
+    e.preventDefault();
+    imgSlides.swipeNext();
+  });
+
+  // 文本轮播 swiperjs 配置
+  var textSlides = $(settings.textSlidesSelector + ' .swiper-container').swiper({
+    autoplay: settings.frequency,
+    speed: settings.speed,
+    autoplayDisableOnInteraction: true,
+    slidesPerView: 1,
+    centeredSlides: true,
+    grabCursor: true,
+    onSlideChangeStart: function(){ //teacherInfo和teachersCarousel互相控制
+      imgSlides.swipeTo(textSlides.activeIndex, settings.speed, false);
+    },
+  });
+
+  function updateTeacherInfo(index) {
+    textSlides.swipeTo(index, settings.speed, false);
+  }
 }

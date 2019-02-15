@@ -51,7 +51,7 @@
       //创建页面公共组件
       createCommonComponents(4);
 
-      // 请求老师图片
+      // 请求师资数据
       ajaxGet({
         url: domainUrl + 'web/teacher',
         success: function (data) {
@@ -68,51 +68,16 @@
             getSlideText(data[i], '#teacher-info-slides');
           } // for
 
-          // 师资轮播图 swiperjs 配置
-          var tsAutoplayFrequence = 6000;
-          var tsSpeed = 800;
-          var teacherSlides = $('#teacher-slides .swiper-container').swiper({
-            autoplay: tsAutoplayFrequence,
-            speed: tsSpeed,
-            autoplayDisableOnInteraction: true,
-            grabCursor: true,
-            slidesPerView: 3,
-            centeredSlides: true,
-            watchActiveIndex: true,
-            onSlideChangeStart: function () {
-              updateTeacherInfo(teacherSlides.activeLoopIndex);
-            },
-            onTouchEnd: function(){
-              teacherSlides.swipeNext();
-            }
+          // 师资轮播图片和文本关联 swiperjs 配置
+          var frequency = 6000;
+          var speed = 800;
+          setBoundSlides({
+            imgSlidesSelector: '#teacher-slides',
+            textSlidesSelector: '#teacher-info-slides',
+            arrowColor: 'white',
+            frequency: frequency,
+            speed: speed
           });
-          $('#teacher-slides .arrow-left-white').on('click', function(e){
-            e.preventDefault();
-            teacherSlides.swipePrev();
-          });
-
-          $('#teacher-slides .arrow-right-white').on('click', function(e){
-            e.preventDefault();
-            teacherSlides.swipeNext();
-          });
-
-          // 老师介绍 swiperjs 配置
-          var teacherInfoSlides = $('#teacher-info-slides .swiper-container').swiper({
-            autoplay: tsAutoplayFrequence,
-            speed: tsSpeed,
-            autoplayDisableOnInteraction: true,
-            slidesPerView: 1,
-            centeredSlides: true,
-            grabCursor: true,
-            onSlideChangeStart: function(){ //teacherInfo和teachersCarousel互相控制
-              teacherSlides.swipeTo(teacherInfoSlides.activeLoopIndex, tsSpeed, false);
-            },
-          });
-
-          function updateTeacherInfo(index) {
-            teacherInfoSlides.swipeTo(index, tsSpeed, false);
-          }
-
         }
       });
     });

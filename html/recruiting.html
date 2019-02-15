@@ -72,49 +72,37 @@
 
       //请求推荐剧组信息
       ajaxGet({
-        url: domainUrl + 'web/drama',
+        url: domainUrl + 'web/dramas',
         success: function (data) {
           var isnull = data.isnull;
-
+          data = data.data[0];
           // 请求推荐剧组数据
           if(isnull) { //后台没有上传剧组数据，展示"敬请期待"图片
             showTBA('#hot-recommend');
           }
           else { //请求到了剧组数据
-            data = data.data;
-
             // 剧组招募 - 剧组图片与简单剧组信息,带查看详情链接
             getIntroBlk(data, '#hot-recommend', true);
-
              // 剧故事梗概
-            // var $story = '<div class="simple-text">' +
-            //     '<h4>故事梗概：</h4>' +
-            //     '<p>' + data.crew.introduction + '</p>' +
-            //   '</div>';
-            // $('#hot-recommend').append($story);
             getStory(data, '#hot-recommend');
 
             if(data.actor[0].information != "") { //如果没有返回演员的数据，就完全不展示轮播图
-
-              /* ================================
-                           剧组明星轮播图
-                 ================================ */
-
+              var actors = data.actor;
               // 明星图片轮播图
               var $recommendSlideWrapper = '<div id="recommend-slides" class="intro-carousel">' +
-                '<div class="carousel-wrapper">' +
-                '<a href="#" class="arrow-left"></a>' +
-                '<a href="#" class="arrow-right"></a>' +
-                '<div class="swiper-container">' +
-                '<div class="swiper-wrapper">' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
+                  '<div class="carousel-wrapper">' +
+                    '<a href="#" class="arrow-left"></a>' +
+                    '<a href="#" class="arrow-right"></a>' +
+                    '<div class="swiper-container">' +
+                      '<div class="swiper-wrapper">' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
                 '</div>';
               $('#hot-recommend').append($recommendSlideWrapper);
-              for(var i=0,length=data.actor.length; i<length; ++i ) {
+              for(var i=0,length=actors.length; i<length; ++i ) {
                 var $actorSlide = '<div class="swiper-slide">' +
-                  '<img src="' + ossUrl + data.actor[i].avatar + '" alt="明星轮播图">' +
+                  '<img src="' + ossUrl + actors[i].avatar + '" alt="明星轮播图">' +
                   '</div>';
                 $('#recommend-slides .swiper-wrapper').append($actorSlide);
               }
@@ -127,70 +115,22 @@
                 '</div>' +
                 '</div>';
               $('#hot-recommend').append($actorInfoSlideWrapper);
-              for(var i=0,length=data.actor.length; i<length; ++i) {
-                var $actorInfoSlide = '<div class="swiper-slide">' +
-                  '<table class="profile-info">' +
-                  '<thead>' +
-                  '<tr><th colspan="2"><h3>' + data.actor[i].name + '</h3></th></tr>' +
-                  '</thead>' +
-                  '<tbody>' +
-                  '<tr>' +
-                  '<th>饰演：</th>' +
-                  '<td>' + data.actor[i].role + '</td>' +
-                  '</tr>' +
-                  '<tr>' +
-                  '<th>作品：</th>' +
-                  '<td>' + data.actor[i].experiment + '</td>' +
-                  '</tr>' +
-                  '<tr>' +
-                  '<th>简介：</th>' +
-                  '<td>' + data.actor[i].information + '</td>' +
-                  '</tr>' +
-                  '</tbody>' +
-                  '</table>' +
-                  '</div>';
-                $('#actor-info-slides .swiper-wrapper').append($actorInfoSlide);
-              } // for
+              for(var i=0,length=actors.length; i<length; ++i) { //请求对应明星信息
+                getSlideText(actors[i], '#actor-info-slides');
+              } 
 
-              // 明星图片swiperjs配置
-              var recommendSlides = $('#recommend-slides .swiper-container').swiper({
-                // loop: true,
-                // autoplay: 2000,
-                grabCursor: true,
-                slidesPerView: 3,
-                autoplayDisableOnInteraction: true,
-                centeredSlides: true,
-                onSlideChangeStart: function () {
-                  updateHotInfo(recommendSlides.activeIndex);
-                }
+              // 师资轮播图片和文本关联 swiperjs 配置
+              var frequency = 6000,
+                  speed = 800;
+              setBoundSlides({
+                imgSlidesSelector: '#recommend-slides',
+                textSlidesSelector: '#actor-info-slides',
+                arrowColor: '',
+                frequency: frequency,
+                speed: speed
               });
-              $('#recommend-slides .arrow-left').on('click', function (e) {
-                e.preventDefault();
-                recommendSlides.swipePrev();
-              });
-              $('#recommend-slides .arrow-right').on('click', function (e) {
-                e.preventDefault();
-                recommendSlides.swipeNext();
-              });
-
-              // 明星介绍轮播文本 swiperjs 配置
-              var actorInfoSlides = $('#actor-info-slides .swiper-container').swiper({
-                autoplay: 2000,
-                slidesPerView: 1,
-                centeredSlides: true,
-                autoplayDisableOnInteraction: true,
-                grabCursor: true,
-                onSlideChangeStart: function () {
-                  recommendSlides.swipeTo(actorInfoSlides.activeIndex, 400, false);
-                }
-              });
-
-              function updateHotInfo(index) {
-                actorInfoSlides.swipeTo(index, 400, false);
-              }
-            } // if(data.actor[0].information != "")
-
-
+              
+            } // if(actors[0].information != "")
           } // else 请求到了剧组数据
         } // success
       }); //$.ajax 请求剧组信息
