@@ -103,13 +103,9 @@
   </div> <!-- #partner-orgs -->
 
 
-  <!-------------------------------- 各种插件 -------------------------------->
   <script src="./plugin/jquery/1.12.4/jquery.min.js"></script>
   <script src="./plugin/swiper.js/2.7.6/js/idangerous.swiper.min.js"></script>
   <script src="./plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-  <!-------------------------------- 自定义js -------------------------------->
   <script src="./js/acdors.js"></script>
   <script>
     "use strict";
@@ -140,7 +136,7 @@
           { //请求到了热门剧组数据
 
             // 热门剧组 - 剧组图片与简单剧组信息,不带查看详情链接
-            getIntroBlk(data, '#hot', false);
+            $('#hot').append(buildIntroBlk(data.crewinfo, false));
 
             if(data.actor[0].information != "") {
             // if(data.actor[0].information == "") {

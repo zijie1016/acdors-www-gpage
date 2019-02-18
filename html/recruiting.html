@@ -18,40 +18,22 @@
 </head>
 <body>
 
-  <!-------------------------------- 活动轮播图 -------------------------------->
-  <div id="event-slides" class="main-carousel">
-    <div class="swiper-container">
-      <div class="swiper-wrapper">
-      </div>
-    </div>
-    <div class="pagination"></div>
-  </div>
-
-  <!-------------------------------- 热剧推荐 -------------------------------->
-  <div id="hot-recommend" class="container">
-    <div class="row">
-      <div class="sec-caption col-xs-12">
-        <p>热剧推荐</p>
-        <div class="padding"></div>
-      </div>
-    </div>
-    <div id="img-tba"></div>
-  </div> <!-- #hot-recommend -->
-
-  <!-- 各种插件 -->
   <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
   <script src="../plugin/swiper.js/2.7.6/js/idangerous.swiper.min.js"></script>
   <script src="../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-  <!-------------------------------- 自定义js -------------------------------->
   <script src="../js/acdors.js"></script>
   <script>
     $(function () {
       //创建页面公共组件
       createCommonComponents(2);
 
-      // 请求活动大轮播图
+      //创建活动轮播框架
+      $('body .navbar').after(buildSlideContainer({
+        id: 'event-slides',
+        class: 'main-carousel',
+        pagiClass: 'pagination'
+      }));
+      // 请求活动轮播图数据
       ajaxGet({
         url: domainUrl + 'web/banner',
         data: {banner_area: 3},
@@ -60,55 +42,67 @@
         } // success
       }); // ajaxGet()
 
-      //请求推荐剧组信息
+      //创建热剧推荐结构
+      $('#event-slides').after(buildCrewInfo('hot-recommend', '热剧推荐'));
+      //请求热剧推荐数据
       ajaxGet({
         url: domainUrl + 'web/dramas',
         success: function (data) {
-          var isnull = data.isnull;
-          data = data.data[0];
           // 请求推荐剧组数据
-          if(isnull) { //后台没有上传剧组数据，展示"敬请期待"图片
-            showTBA('#hot-recommend');
+          if(data.isnull) { //后台没有上传剧组数据，展示"敬请期待"图片
+            $('#hot-recommend').append(buildTBA('/img/tba.png'));
           }
           else { //请求到了剧组数据
-            // 剧组简单信息 
-            getIntroBlk(data, '#hot-recommend', true); // 剧组图片与简单剧组信息,带查看详情链接
-            getStory(data, '#hot-recommend'); // 故事梗概
+            crews = data.data;
+            for(var i=0, len=crews.length; i<len; ++i){
+              getCrew(crews[i]);
+            }
+          } // else 请求到了剧组数据
+        } // success
+      }); //$.ajax 请求剧组信息
+    }); // $(function(){})
 
-            // 剧组明星介绍轮播图
-            if(data.actor[0].information != "") { //如果没有返回演员的数据，就完全不展示轮播图
-              var actors = data.actor;
-              // 创建明星轮播框架
-              $('#hot-recommend').append(buildSlideContainer({ // 明星图片
+    function getCrew(crew){
+      // 剧组简单信息 
+      $('#hot-recommend').append(buildIntroBlk(crew.crewinfo, true));
+      $('#hot-recommend').append(buildSimpleText(crew.crewinfo.introduction));
+
+      // 剧组明星介绍轮播图
+      if(crew.actor[0].information != "") { //如果没有返回演员的数据，就完全不展示轮播图
+        var actors = crew.actor;
+        // 创建明星轮播框架
+        $('#hot-recommend').append(buildActorSlides());
+        
+        // 获取轮播数据
+        for(var i=0,length=actors.length; i<length; ++i ) {
+          $('#recommend-slides .swiper-wrapper').append(getImgSlide(ossUrl + actors[i].avatar, '明星轮播图')); // 图片
+          $('#actor-info-slides .swiper-wrapper').append(getTextSlide(actors[i])); //介绍文本
+        }
+        // 明星轮播图片和文本关联 swiperjs 配置
+        setBoundSlides({
+          imgSlidesSelector: '#recommend-slides',
+          textSlidesSelector: '#actor-info-slides',
+          prevClass: 'arrow-left',
+          nextClass: 'arrow-right',
+          frequency: 6000,
+          speed: 800
+        }); // setBoundSlides
+      } // if(actors[0].information != "")
+    } // getCrew()
+
+    function buildActorSlides(){
+      var $actorSlides = buildSlideContainer({ // 明星图片
                 id: 'recommend-slides',
                 class: 'intro-carousel',
                 prevClass: 'arrow-left',
                 nextClass: 'arrow-right'
-              }));
-              $('#hot-recommend').append(buildSlideContainer({ // 明星介绍文本
+              });
+      $actorSlides += buildSlideContainer({ // 明星介绍文本
                 id: 'actor-info-slides',
                 class: 'intro-text-carousel',
-              }));
-              // 获取轮播数据
-              for(var i=0,length=actors.length; i<length; ++i ) {
-                $('#recommend-slides .swiper-wrapper').append(getImgSlide(ossUrl + actors[i].avatar, '明星轮播图')); // 图片
-                $('#actor-info-slides .swiper-wrapper').append(getTextSlide(actors[i])); //介绍文本
-              }
-              // 明星轮播图片和文本关联 swiperjs 配置
-              setBoundSlides({
-                imgSlidesSelector: '#recommend-slides',
-                textSlidesSelector: '#actor-info-slides',
-                frequency: 6000,
-                speed: 800
               });
-              
-            } // if(actors[0].information != "")
-          } // else 请求到了剧组数据
-        } // success
-      }); //$.ajax 请求剧组信息
-
-
-    }); // $(function(){})
+      return $actorSlides;
+    }
   </script>
 </body>
 </html>

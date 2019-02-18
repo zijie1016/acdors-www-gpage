@@ -111,43 +111,41 @@ function getBannerSlides(data, slideId){
 }
 
 // 请求剧组信息（图片与简单信息）
-function getIntroBlk(data, containerId, seeMore){
-  var crewinfo = data.crewinfo;
-  var $introBlk = '<div class="row intro-blk">' +
-      '<div class="intro-img col-xs-12 col-md-7">' +
-        '<img class="img-responsive" src="' + ossUrl + crewinfo.crew_picurl + '" alt="剧组图片">' +
-      '</div>' +
-      '<div class="intro-text col-xs-12 col-md-5">' +
-        '<h3>' + crewinfo.crew_name + '</h3>' +
-        '<p>' +
-          '剧组类型：' + crewinfo.crew_type + '<br>' +
-          '导演：' + crewinfo.crew_director + '<br>' +
-          '制作公司：' + crewinfo.crew_producer + '<br>' +
-          '出品方：' + crewinfo.crew_investor + '<br>' +
-          '开机日期：' + crewinfo.crew_bootime + '<br>' +
-          '拍摄地点：' + crewinfo.crew_position +
-        '</p>' +
-      '</div>';
+function buildIntroBlk(crewinfo, seeMore){
+  var $crewinfo = '<div class="row intro-blk">' +
+    '<div class="intro-img col-xs-12 col-md-7">' +
+      '<img class="img-responsive" src="' + ossUrl + crewinfo.crew_picurl + '" alt="剧组图片">' +
+    '</div>' +
+    '<div class="intro-text col-xs-12 col-md-5">' +
+      '<h3>' + crewinfo.crew_name + '</h3>' +
+      '<p>' +
+        '剧组类型：' + crewinfo.crew_type + '<br>' +
+        '导演：' + crewinfo.crew_director + '<br>' +
+        '制作公司：' + crewinfo.crew_producer + '<br>' +
+        '出品方：' + crewinfo.crew_investor + '<br>' +
+        '开机日期：' + crewinfo.crew_bootime + '<br>' +
+        '拍摄地点：' + crewinfo.crew_position +
+      '</p>' +
+    '</div>';
   if(seeMore){ // 如果可以查看详情，加一个链接
-      $introBlk += '<a class="col-xs-12 col-md-5" href="crew-info.html">查看剧组详情</a>';
+    $crewinfo += '<a class="col-xs-12 col-md-5" href="crew-info.html">查看剧组详情</a>';
   }
-  $introBlk += '</div>';
-  $(containerId).append($introBlk);
+  $crewinfo += '</div>';
+
+  return $crewinfo;
 }
 
-// 后台没有上传热门剧组数据，展示"敬请期待"图片
-function showTBA(containerId){
-  var $img = '<img class="img-responsive" src="/img/tba.png" alt="敬请期待">';
-  $(containerId + ' > #img-tba').append($img)
+// 创建"敬请期待"结构(TBA = To Be Announced)
+function buildTBA(src){
+  return '<div id="img-tba"><img class="img-responsive" src="'+ src +'" alt="敬请期待"></div>'
 }
 
 // 请求剧组故事梗概
-function getStory(data, containerId){
-  var $story = '<div class="simple-text">' +
-                '<h4>故事梗概：</h4>' +
-                '<p>' + data.crewinfo.introduction + '</p>' +
-              '</div>';
-  $(containerId).append($story);
+function buildSimpleText(content){
+  return '<div class="simple-text">' +
+    '<h4>故事梗概：</h4>' +
+    '<p>' + content + '</p>' +
+  '</div>'; 
 }
 
 // 请求轮播介绍文本
@@ -225,25 +223,26 @@ function setBoundSlides(settings){
 // 创建轮播框架（不含轮播内容）
 function buildSlideContainer(settings){
   var $container = '<div id="' + settings.id + '" class="' + settings.class + '">';
-        // '<div class="carousel-wrapper">';
   if(settings.hasCWrapper){
     $container += '<div class="carousel-wrapper">';
   }
-  if(settings.prevClass != undefined){
+  if(settings.prevClass != undefined){ // 上一页按钮
     $container += '<a href="#" class="'+ settings.prevClass +'"></a>';
   }
-  if(settings.nextClass != undefined){
+  if(settings.nextClass != undefined){ //下一页按钮
     $container += '<a href="#" class="'+ settings.nextClass +'"></a>';
   }
   $container += '<div class="swiper-container">' +
         '<div class="swiper-wrapper">' +
         '</div>' +
-      '</div>' +
-    '</div>'; 
-  if(settings.hasCWrapper){
-    $container += '</div>';
+      '</div>'; 
+  if(settings.hasCWrapper){ 
+    $container += '</div>'; // carousel-wrapper
   }
-  $container += '</div>';
+  if(settings.pagiClass != undefined){ // 页面选择按钮
+    $container += '<div class="' + settings.pagiClass + '"></div>';
+  }
+  $container += '</div>'; 
 
   return $container;
 }
@@ -251,4 +250,17 @@ function buildSlideContainer(settings){
 // 创建单个图片轮播项，获取图片资源
 function getImgSlide(url, alt){
   return  '<div class="swiper-slide"><img src="' + url + '" alt=' + alt +'></div>';
+}
+
+// 创建剧组信息结构
+function buildCrewInfo(id, caption){
+  return '<div id="' + id + '" class="container">' + buildSecCaption(caption) + '</div>';
+}
+
+// 创建模块大标题
+function buildSecCaption(caption){
+  return '<div class="row"><div class="sec-caption col-xs-12">' +
+            '<p>' + caption + '</p>' +
+            '<div class="padding"></div>' +
+          '</div></div>';
 }
