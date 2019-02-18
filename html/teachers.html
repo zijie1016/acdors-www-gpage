@@ -17,70 +17,56 @@
 </head>
 <body>
 
-  <!-------------------------------- 师资轮播图 -------------------------------->
-  <div id="teacher-slides" class="intro-carousel">
-    <!--此wrapper非彼wrapper，是自定义的wrapper-->
-    <div class="carousel-wrapper">
-      <a href="#" class="arrow-left-white"></a>
-      <a href="#" class="arrow-right-white"></a>
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-        </div> <!-- .swiper-wrapper -->
-      </div> <!-- .swiper-container -->
-      <!--<div class="pagination"></div>-->
-    </div> <!-- .carousel-wrapper -->
-  </div> <!-- #teacher-slides -->
-
-  <!--------------------------- 师资轮播图对应的老师介绍 --------------------------->
-  <div id="teacher-info-slides" class="intro-text-carousel">
-    <div class="swiper-container">
-      <div class="swiper-wrapper">
-      </div> <!-- .swiper-wrapper -->
-    </div> <!-- .swiper-container -->
-  </div> <!-- #teacher-info-slides -->
-
-  <!-------------------------------- 各种插件 -------------------------------->
   <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
   <script src="../plugin/swiper.js/2.7.6/js/idangerous.swiper.min.js"></script>
   <script src="../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-  <!-------------------------------- 自定义javascript -------------------------------->
   <script src="../js/acdors.js"></script>
   <script>
     $(function () {
       //创建页面公共组件
       createCommonComponents(4);
 
+      //创建师资轮播框架
+      $('body .navbar').after(buildTeacherSlides());
+
       // 请求师资数据
       ajaxGet({
         url: domainUrl + 'web/teacher',
         success: function (data) {
           data = data.data;
-
+          
+          // 获取师资轮播图数据
           for(var i=0,length=data.length; i<length; ++i) {
-            // 请求每个老师的图片
-            var $teacherSlide = '<div class="swiper-slide">' +
-                '<img src="' + ossUrl + data[i].avatar + '" alt="师资轮播图">' +
-              '</div>';
-            $('#teacher-slides .swiper-wrapper').append($teacherSlide);
-
-            // 请求对应老师的信息
-            getSlideText(data[i], '#teacher-info-slides');
+            $('#teacher-slides .swiper-wrapper').append(getImgSlide(ossUrl + data[i].avatar, '师资轮播图')); // 获取师资图片
+            $('#teacher-info-slides .swiper-wrapper').append(getTextSlide(data[i])); // 获取师资介绍文本
           } // for
-
           // 师资轮播图片和文本关联 swiperjs 配置
-          var frequency = 6000;
-          var speed = 800;
           setBoundSlides({
             imgSlidesSelector: '#teacher-slides',
             textSlidesSelector: '#teacher-info-slides',
-            arrowColor: 'white',
-            frequency: frequency,
-            speed: speed
+            prevClass: 'arrow-left-white',
+            nextClass: 'arrow-right-white',
+            frequency: 6000,
+            speed: 800
           });
-        }
+        } // success
+      }); // ajaxGet()
+    }); //$(function())
+
+    function buildTeacherSlides(){
+      var $teacherSlides = buildSlideContainer({
+        id: 'teacher-slides',
+        class: 'intro-carousel',
+        hasCWrapper: true,
+        prevClass: 'arrow-left-white',
+        nextClass: 'arrow-right-white'
       });
-    });
+      $teacherSlides += buildSlideContainer({
+        id: 'teacher-info-slides',
+        class: 'intro-text-carousel'
+      });
+      return $teacherSlides;
+    }
   </script>
 </body>
 </html>

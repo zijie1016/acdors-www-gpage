@@ -7,14 +7,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
   <link rel="stylesheet" href="../css/acdors.css">
   <link rel="icon" href="/favicon.ico">
-  <!--Bootstrap 3.3.7 -->
   <link href="../plugin/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  <!--Swiper.js 2.7.6-->
   <link rel="stylesheet" href="../plugin/swiper.js/2.7.6/css/idangerous.swiper.css">
-  <!--custom styles-->
   <link rel="stylesheet" href="../css/acdors.css">
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="../plugin/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="../plugin/respond/1.4.2/respond.min.js"></script>
@@ -43,14 +38,9 @@
     <div id="img-tba"></div>
   </div> <!-- #hot-recommend -->
 
-  <!-------------------------------- 各种插件 -------------------------------->
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <!--(for debugging only)-->
+  <!-- 各种插件 -->
   <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
-  <!-- swiper.js 2.7.6 (for debuggin only) -->
   <script src="../plugin/swiper.js/2.7.6/js/idangerous.swiper.min.js"></script>
-  <!--<script src="../js/carousels.js"></script>-->
-  <!--Bootstrap 3.3.37 javascript file (for debugging only)-->
   <script src="../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
@@ -81,53 +71,35 @@
             showTBA('#hot-recommend');
           }
           else { //请求到了剧组数据
-            // 剧组招募 - 剧组图片与简单剧组信息,带查看详情链接
-            getIntroBlk(data, '#hot-recommend', true);
-             // 剧故事梗概
-            getStory(data, '#hot-recommend');
+            // 剧组简单信息 
+            getIntroBlk(data, '#hot-recommend', true); // 剧组图片与简单剧组信息,带查看详情链接
+            getStory(data, '#hot-recommend'); // 故事梗概
 
+            // 剧组明星介绍轮播图
             if(data.actor[0].information != "") { //如果没有返回演员的数据，就完全不展示轮播图
               var actors = data.actor;
-              // 明星图片轮播图
-              var $recommendSlideWrapper = '<div id="recommend-slides" class="intro-carousel">' +
-                  '<div class="carousel-wrapper">' +
-                    '<a href="#" class="arrow-left"></a>' +
-                    '<a href="#" class="arrow-right"></a>' +
-                    '<div class="swiper-container">' +
-                      '<div class="swiper-wrapper">' +
-                      '</div>' +
-                    '</div>' +
-                  '</div>' +
-                '</div>';
-              $('#hot-recommend').append($recommendSlideWrapper);
+              // 创建明星轮播框架
+              $('#hot-recommend').append(buildSlideContainer({ // 明星图片
+                id: 'recommend-slides',
+                class: 'intro-carousel',
+                prevClass: 'arrow-left',
+                nextClass: 'arrow-right'
+              }));
+              $('#hot-recommend').append(buildSlideContainer({ // 明星介绍文本
+                id: 'actor-info-slides',
+                class: 'intro-text-carousel',
+              }));
+              // 获取轮播数据
               for(var i=0,length=actors.length; i<length; ++i ) {
-                var $actorSlide = '<div class="swiper-slide">' +
-                  '<img src="' + ossUrl + actors[i].avatar + '" alt="明星轮播图">' +
-                  '</div>';
-                $('#recommend-slides .swiper-wrapper').append($actorSlide);
+                $('#recommend-slides .swiper-wrapper').append(getImgSlide(ossUrl + actors[i].avatar, '明星轮播图')); // 图片
+                $('#actor-info-slides .swiper-wrapper').append(getTextSlide(actors[i])); //介绍文本
               }
-
-              // 明星介绍轮播文本
-              var $actorInfoSlideWrapper = '<div id="actor-info-slides" class="intro-text-carousel">' +
-                '<div class="swiper-container">' +
-                '<div class="swiper-wrapper">' +
-                '</div>' +
-                '</div>' +
-                '</div>';
-              $('#hot-recommend').append($actorInfoSlideWrapper);
-              for(var i=0,length=actors.length; i<length; ++i) { //请求对应明星信息
-                getSlideText(actors[i], '#actor-info-slides');
-              } 
-
-              // 师资轮播图片和文本关联 swiperjs 配置
-              var frequency = 6000,
-                  speed = 800;
+              // 明星轮播图片和文本关联 swiperjs 配置
               setBoundSlides({
                 imgSlidesSelector: '#recommend-slides',
                 textSlidesSelector: '#actor-info-slides',
-                arrowColor: '',
-                frequency: frequency,
-                speed: speed
+                frequency: 6000,
+                speed: 800
               });
               
             } // if(actors[0].information != "")

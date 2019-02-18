@@ -151,26 +151,23 @@ function getStory(data, containerId){
 }
 
 // 请求轮播介绍文本
-function getSlideText(data, containerId){
-  var $slideText = '<div class="swiper-slide">' +
-      '<table class="profile-info">' +
+function getTextSlide(data){
+  var $slideText = '<div class="swiper-slide"><table class="profile-info">' +
         '<thead>' +
           '<tr><th colspan="2"><h3>' + data.name + '</h3></th></tr>' +
         '</thead>' +
         '<tbody>';
-  $slideText += getSlideTextRow('性别', ((data.gender == 1) ? '男' : '女'));
-  $slideText += getSlideTextRow('职业', data.profession);
-  $slideText += getSlideTextRow('饰演', data.role);
-  $slideText += getSlideTextRow('作品', data.creation); //老师的作品
-  $slideText += getSlideTextRow('作品', data.experiment); //明星的作品
-  $slideText += getSlideTextRow('简介', data.content);
-  $slideText += '</tbody>' +
-      '</table>' +
-    '</div>';
-  $(containerId + ' .swiper-wrapper').append($slideText);
+  $slideText += getTextSlideRow('性别', ((data.gender == 1) ? '男' : '女'));
+  $slideText += getTextSlideRow('职业', data.profession);
+  $slideText += getTextSlideRow('饰演', data.role);
+  $slideText += getTextSlideRow('作品', data.creation); //老师的作品
+  $slideText += getTextSlideRow('作品', data.experiment); //明星的作品
+  $slideText += getTextSlideRow('简介', data.content);
+  $slideText += '</tbody></table></div>';
+  return $slideText;
 }
 // 获取轮播介绍文本每一行
-function getSlideTextRow(rowHead, rowData){
+function getTextSlideRow(rowHead, rowData){
   var $str = "";
   if(rowData!="" && rowData!=undefined){ //如果没有数据，则不显示此行
     $str = '<tr>' +
@@ -199,12 +196,11 @@ function setBoundSlides(settings){
       imgSlides.swipeNext();
     }
   });
-  var arrowColor = settings.arrowColor=='' ? '' : '-' + settings.arrowColor; // 左右翻页箭头图标可选
-  $(settings.imgSlidesSelector + ' .arrow-left' + arrowColor).on('click', function(e){
+  $(settings.imgSlidesSelector + ' .' + settings.prevClass).on('click', function(e){
     e.preventDefault();
     imgSlides.swipePrev();
   });
-  $(settings.imgSlidesSelector + ' .arrow-right' + arrowColor).on('click', function(e){
+  $(settings.imgSlidesSelector + ' .' + settings.nextClass).on('click', function(e){
     e.preventDefault();
     imgSlides.swipeNext();
   });
@@ -219,10 +215,40 @@ function setBoundSlides(settings){
     grabCursor: true,
     onSlideChangeStart: function(){ //teacherInfo和teachersCarousel互相控制
       imgSlides.swipeTo(textSlides.activeIndex, settings.speed, false);
-    },
+    }
   });
 
   function updateTeacherInfo(index) {
     textSlides.swipeTo(index, settings.speed, false);
   }
+}
+// 创建轮播框架（不含轮播内容）
+function buildSlideContainer(settings){
+  var $container = '<div id="' + settings.id + '" class="' + settings.class + '">';
+        // '<div class="carousel-wrapper">';
+  if(settings.hasCWrapper){
+    $container += '<div class="carousel-wrapper">';
+  }
+  if(settings.prevClass != undefined){
+    $container += '<a href="#" class="'+ settings.prevClass +'"></a>';
+  }
+  if(settings.nextClass != undefined){
+    $container += '<a href="#" class="'+ settings.nextClass +'"></a>';
+  }
+  $container += '<div class="swiper-container">' +
+        '<div class="swiper-wrapper">' +
+        '</div>' +
+      '</div>' +
+    '</div>'; 
+  if(settings.hasCWrapper){
+    $container += '</div>';
+  }
+  $container += '</div>';
+
+  return $container;
+}
+
+// 创建单个图片轮播项，获取图片资源
+function getImgSlide(url, alt){
+  return  '<div class="swiper-slide"><img src="' + url + '" alt=' + alt +'></div>';
 }
