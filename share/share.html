@@ -11,123 +11,69 @@
   <title>星榜戏逗 - 你，绝对有戏</title>
 </head>
 <body>
-  <div id="wrapper">
-    <div id="cover" class="touchable">
-      <table cellspacing="0">
-        <tr>
-          <td id="logo">
-            <div>
-              <img src="../img/logo.png" alt="logo">
-            </div>
-          </td>
-          <td id="slogan">
-            <div>你，绝对有戏</div>
-          </td>
-          <td id="open">
-            <div>打开</div>
-          </td>
-        </tr>
-      </table>
-    </div> <!-- #cover -->
-
-    <div id="ui-dock" class="touchable">
-      <div class="share-ui">
-        <div id="like-btn" class="share-btn">
-          <img  src="img/likes-red.png" alt="赞">
-        </div>
-        <div id="likes" class="share-btn-text"></div>
-      </div>
-      <div class="share-ui">
-        <div id="comments-btn" class="share-btn">
-          <img src="img/comments.png" alt="评论">
-        </div>
-        <div id="comments" class="share-btn-text"></div>
-      </div>
-      <div class="share-ui">
-        <div class="share-btn">
-          <img src="img/share.png" alt="分享">
-        </div>
-      </div>
-    </div> <!-- #ui-dock -->
-
-    <div id="profile-dock" class="touchable">
-      <div id="profile-pic"></div>
-      <table>
-        <tr>
-          <td>
-            <div id="author-name"></div>
-            <div id="follow">
-              <div>+关注</div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div id="video-info"></div>
-          </td>
-        </tr>
-      </table>
-    </div> <!-- #profile-dock -->
-
-    <div id="modal" class="modal fade dim">
-        <div class="modal-content">
-          <a href="http://www.acdors.com">了解更多 >></a>
-        </div>
-    </div> <!-- #modal -->
-
-  </div> <!-- #wrapper -->
 
   <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
   <script src="../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="../js/acdors.js"></script>
+  <script src="js/share.js"></script>
   <script>
-    jQuery.noConflict();
-    jQuery(function ($) {
+    $(function () {
       var uid = GetQueryString('uid');
       var did = GetQueryString('did');
+      var topicid = GetQueryString('topic_id');
+      var activityid = GetQueryString('activity_id');
+      
+      // 视频分享页
+      if(ready(did)){ 
+        //构建基本页面
+        buildVidShare(); 
+        //请求数据
+        ajaxGetShare({
+          pageType: 'video',
+          data: {uid: uid, cid: did},
+          success: function(data){
+            var ossUrl = data.ossUrl;
+            var data = data.videoinfo;
 
-      // 请求数据
-      $.ajax({
-        type: "get",
-        url: domainUrl + 'web/share',
-        async: true,
-        data:{uid: uid, did: did},
-        dataType: "json",
-        success: function (data) {
-          var ossUrl = data.ossUrl;
-          var data = data.videoinfo;
+            $('#likes').append(data.like_count);  //点赞数
+            $('#comments').append(data.comment_count); //评论数
+            $('#profile-pic').append('<img src="' + ossUrl +  data.avatar + '" alt="头像">'); //用户头像
+            $('#author-name').append(data.nickname); //用户名
+            $('#video-info').append(data.video_info); //视频介绍
 
-          $('#likes').append(data.like_count);  //点赞数
-          $('#comments').append(data.comment_count); //评论数
+            //视频资源
+            var $video = '<video id="vid" src="' + data.video_src +
+              '" webkit-playsinline="true"' +
+              ' playsinline="true"' +
+              ' x5-video-player-type="h5"' +
+              ' x5-video-orientation="portraint"' +
+              ' x5-video-player-fullscreen="false"' +
+              ' poster="' + data.image_src + '" ' +
+              ' controls="controls"></video>';
+            $('#wrapper').append($video);
+          } // success
+        }); // ajaxGetShare
 
-          var $img = '<img src="' + ossUrl +  data.avatar + '" alt="头像">';
-          $('#profile-pic').append($img); //用户头像
-
-          $('#author-name').append(data.nickname); //用户名
-          $('#video-info').append(data.video_info); //视频介绍
-
-          //视频资源
-          var $video = '<video id="vid" src="' + data.video_src +
-            '" webkit-playsinline="true"' +
-            ' playsinline="true"' +
-            ' x5-video-player-type="h5"' +
-            ' x5-video-orientation="portraint"' +
-            ' x5-video-player-fullscreen="false"' +
-            ' poster="' + data.image_src + '" ' +
-            ' controls="controls"></video>';
-          $('#wrapper').append($video);
-        }
-      }); //$.ajax
-
-      // 点击三个UI后跳转（官网或app下载页）
-      $('.touchable').click(function(){
-        $('#modal').modal({
-          backdrop: false
+        // 点击三个UI后跳转（官网或app下载页）
+        $('.touchable').click(function(){
+          $('#modal').modal({
+            backdrop: false
+          });
         });
-      });
-      $('#modal').click(function(){
-        $(this).modal('hide');
-      });
+        $('#modal').click(function(){
+          $(this).modal('hide');
+        });
+      } // if(视频分享)
+
+      // 话题分享页
+      else if(ready(topicid)){ 
+        buildTopicShare(); 
+      } // else if(话题分享)
+
+      // 活动分享页
+      else if(ready(activityid)){ 
+        buildActivityShare(); 
+      }// else if(活动分享)
+
 
     }); // $(function())
   </script>
