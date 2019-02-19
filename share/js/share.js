@@ -18,13 +18,18 @@ function ready(id){
   return id != null && id != undefined && id != "";
 }
 
+// 构建一个包含元素
+function buildWrapper(bgColor){
+  return '<div id="wrapper" style="background-color:'+ bgColor +';"></div>';
+}
+
 // 构建分享页能用顶部封面
-function buildHeadCover(){
+function buildHeadCover(settings){
   return '<div id="cover" class="touchable">' +
     '<table cellspacing="0">' +
       '<tr>' +
-        '<td id="logo"> <div> <img src="../img/logo.png" alt="logo"> </div> </td>' +
-        '<td id="slogan"> <div>你，绝对有戏</div> </td>' +
+        '<td id="logo"> <div style="border-right-color:'+ settings.color +'"> <img src="'+ settings.logoUrl +'" alt="logo"> </div> </td>' +
+        '<td id="slogan"> <div style="color:'+ settings.color +'; ">你，绝对有戏</div> </td>' +
         '<td id="open"> <div class="pill-btn">打开</div> </td>' +
       '</tr>' +
     '</table>' +
@@ -65,8 +70,8 @@ function ajaxGetShare(settings){ /* cid = content id */
 // 构建视频分享页面
 function buildVidShare(){
   // #wrapper
-  $('body').prepend('<div id="wrapper"></div>');
-  $('#wrapper').append(buildHeadCover());
+  $('body').prepend(buildWrapper('#555'));
+  $('#wrapper').append(buildHeadCover({logoUrl: '../img/logo.png', color: '#fff'}));
   $('#wrapper').append(buildVidUIDock());
   $('#wrapper').append(buildVidProfileDock());
   $('#wrapper').append(buildSeeMoreModal());
@@ -105,7 +110,9 @@ function buildSeeMoreModal(){
 
 // 构建话题分享页面
 function buildTopicShare(){
-  
+  $('body').prepend(buildWrapper()); 
+  $('#wrapper').append(buildHeadCover({logoUrl: '../img/logo-dark.png', color: '#111'}));
+  $('#wrapper').append(buildSeeMoreModal());
 }
 
 // 构建活动分享页面

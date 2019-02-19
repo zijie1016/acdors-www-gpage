@@ -53,15 +53,7 @@
           } // success
         }); // ajaxGetShare
 
-        // 点击三个UI后跳转（官网或app下载页）
-        $('.touchable').click(function(){
-          $('#modal').modal({
-            backdrop: false
-          });
-        });
-        $('#modal').click(function(){
-          $(this).modal('hide');
-        });
+       
       } // if(视频分享)
 
       // 话题分享页
@@ -74,7 +66,15 @@
         buildActivityShare(); 
       }// else if(活动分享)
 
-
+      // 点击三个UI后跳转（官网或app下载页）
+      $('.touchable').click(function(){
+        $('#modal').modal({
+          backdrop: false
+        });
+      });
+      $('#modal').click(function(){
+        $(this).modal('hide');
+      });
     }); // $(function())
   </script>
 
