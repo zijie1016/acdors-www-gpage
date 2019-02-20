@@ -17,13 +17,28 @@ function GetQueryString(name)
   if(r!=null)return  decodeURI(r[2]); return null;
 }
 //将时间戳转换为当地时间
-function getLocalTime(timestamp){
-  var time = new Date(timestamp*1000);
-  var m = time.getMonth() + 1,
+function getLocalTime(settings){
+  var result;
+  var time = new Date(settings.timestamp*1000);
+  var y = time.getFullYear(),
+      m = time.getMonth() + 1,
       d = time.getDate(),
       h = time.getHours(),
       min = time.getMinutes();
-  return addZero(m) + '-' + addZero(d) + ' ' + addZero(h) + ':' + addZero(min);
+  switch(settings.format){
+    case 'mm-dd hh:mm':
+      result = addZero(m) + '-' + addZero(d) + ' ' + addZero(h) + ':' + addZero(min);
+      break;
+    case 'yyyy-mm-dd':
+      result = y + '-' + addZero(m) + '-' + addZero(d);
+      break;
+    case 'yyyy/mm/dd':
+      result = y + '/' + addZero(m) + '/' + addZero(d);
+      break;
+
+    default: result = ''; break;
+  }
+  return result;
 }
 function addZero(n){
   return n<10 ? '0'+n : n;
@@ -51,8 +66,9 @@ function buildWrapper(pageType){
     case 'video':
       return '<div id="vid-wrapper"></div>';
     case 'topic':
-    case 'activity':
       return '<div id="wrapper"></div>';
+    case 'activity':
+      return '<div id="wrapper" style="padding-top: 80px;"></div>';
     default: return "";
   }
 }
@@ -153,7 +169,9 @@ function buildSeeMoreModal(){
     '</div> ';
 }
 
-// 构建话题分享页面
+/* 
+*    构建话题分享页面
+*/
 function buildTopicShare(data){
   $('body').prepend(buildWrapper('topic')); //非视频类分享包含元素
   $('#wrapper').append(buildHeadCover({logoUrl: '../img/logo-dark.png', color: '#111'})); //页头封面
@@ -206,14 +224,35 @@ function buildCommentItem(item){
         '</div>' +
         '<div class="comment-text">' +
           '<div class="user-name">'+ item.nickname +'</div>' +
-          '<div class="comment-time">' + getLocalTime(item.createtime) +'</div>' +
+          '<div class="comment-time">' + getLocalTime({timestamp: item.createtime, format: 'mm-dd hh:mm'}) +'</div>' +
           '<div class="comment-content">'+ item.content +'</div>' +
         '</div>' +
       '</div>';
   return $item;
 }
 
-// 构建活动分享页面
-function buildActivityShare(){
-
+/*
+*    构建活动分享页面
+*/
+function buildActivityShare(activity){
+  $('body').prepend(buildWrapper('activity')); //非视频类分享包含元素
+  $('#wrapper').append(buildHeadCover({logoUrl: '../img/logo-dark.png', color: '#111'})); //页头封面
+  $('#wrapper').append(buildIntroBlk(activity));
+  $('#wrapper').append(buildSeeMoreModal()); // 弹出的跳转模态框
+}
+function buildIntroBlk(activity){
+  return '<div class="row intro-blk">' +
+        '<div class="intro-img col-xs-12">' +
+          '<img class="img-responsive" src="' + ossUrl + activity.activity_picurl + '" alt="剧组图片">' +
+        '</div>' +
+        '<div class="intro-text col-xs-12">' +
+          '<p>' +
+            '剧组名称：' + activity.crew_name + '<br>' +
+            '剧组类型：' + activity.crew_type + '<br>' +
+            '剧组开机：' + getLocalTime({timestamp: activity.crew_bootime, format: 'yyyy/mm/dd'}) + '<br>' +
+            '起止时间：' + getLocalTime({timestamp: activity.begintime, format: 'yyyy/mm/dd'}) + ' - ' +
+                         getLocalTime({timestamp: activity.endtime, format: 'yyyy/mm/dd'}) + '<br>' +
+          '</p>' +
+        '</div>' +
+      '</div>';
 }

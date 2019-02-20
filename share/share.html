@@ -53,7 +53,7 @@
 
             // 点击.touchable UI后跳转（官网或app下载页）
             addModalEvent({class: '.touchable', id: '#modal'});
-          } // success
+          } // success()
         }); // ajaxGetShare
       } // if(视频分享)
 
@@ -67,13 +67,21 @@
             buildTopicShare(data); 
             // 点击.touchable UI后跳转（官网或app下载页）
             addModalEvent({class: '.touchable', id: '#modal'});
-          }
+          } // success()
         }); // ajaxGetShare()
       } // else if(话题分享)
 
       // 活动分享页
       else if(ready(activityid)){ 
-        buildActivityShare(); 
+        ajaxGetShare({
+          pageType: 'activity',
+          data: {uid: uid, cid: activityid},
+          success: function(data){
+            //构建页面
+            buildActivityShare(data.activity); 
+            addModalEvent({class: '.touchable', id: '#modal'});
+          } // success()
+        }); // ajaxGetShare()
       }// else if(活动分享)
 
    
