@@ -4,6 +4,7 @@
 var ossUrl = 'https://acdors.oss-cn-beijing.aliyuncs.com/';
 // var domainUrl = '/api/';
 var domainUrl = 'http://dev.api.acdors.com/';
+// var domainUrl = 'http://api.acdors.com/';
 
 //获取查询字符串
 function GetQueryString(name)
