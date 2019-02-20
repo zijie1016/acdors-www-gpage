@@ -49,16 +49,26 @@
               ' x5-video-player-fullscreen="false"' +
               ' poster="' + data.image_src + '" ' +
               ' controls="controls"></video>';
-            $('#wrapper').append($video);
+            $('#vid-wrapper').append($video);
+
+            // 点击.touchable UI后跳转（官网或app下载页）
+            addModalEvent({class: '.touchable', id: '#modal'});
           } // success
         }); // ajaxGetShare
-
-       
       } // if(视频分享)
 
       // 话题分享页
       else if(ready(topicid)){ 
-        buildTopicShare(); 
+        ajaxGetShare({
+          pageType: 'topic',
+          data: {uid: uid, cid: topicid},
+          success: function(data){
+            //构建页面
+            buildTopicShare(data); 
+            // 点击.touchable UI后跳转（官网或app下载页）
+            addModalEvent({class: '.touchable', id: '#modal'});
+          }
+        }); // ajaxGetShare()
       } // else if(话题分享)
 
       // 活动分享页
@@ -66,15 +76,7 @@
         buildActivityShare(); 
       }// else if(活动分享)
 
-      // 点击三个UI后跳转（官网或app下载页）
-      $('.touchable').click(function(){
-        $('#modal').modal({
-          backdrop: false
-        });
-      });
-      $('#modal').click(function(){
-        $(this).modal('hide');
-      });
+   
     }); // $(function())
   </script>
 

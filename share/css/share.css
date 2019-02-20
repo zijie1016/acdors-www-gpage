@@ -9,7 +9,29 @@ html, body {
 
 
 
-/* 通用组件 */
+/* 
+*   通用组件 
+*/
+
+.touchable:hover {
+    cursor: pointer;
+}
+
+/* 包皮 */
+#wrapper{
+    /* border: 1px solid red; */
+}
+#wrapper *{
+    /* border: 1px dashed blue; */
+}
+#wrapper {
+    width: 100%;
+    max-width: 768px;
+    margin: 0 auto;
+    padding-top: 90px;
+}
+
+/* 胶囊按钮 */
 .pill-btn{
     background-color: #ff2211;
     border-radius: 20px;
@@ -20,13 +42,57 @@ html, body {
     justify-content: center;
 }
 
+/* 简单文本段落 */
+.simple-text {
+    padding: 10px 0;
+}
+.simple-text h4 {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+.simple-text  p {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+}
+@media screen and (min-width: 768px) {
+    .simple-text p {
+        font-size: 16px;
+    }
+}
+
+/* modal */
+.dim {
+    background-color: rgba(50,50,50,0.8);
+}
+.modal-content {
+    background-color: transparent;
+    text-align: center;
+    position:fixed;
+    margin:auto;
+    padding: 5px;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    width:200px;
+    height:40px;
+    box-shadow: none;
+    border: none;
+}
+.modal-content a {
+    color: #fff;
+    font-size: 28px;
+}
+
 /* 
 *    视频分享页样式 
 */
-#wrapper {
+#vid-wrapper {
     position: fixed;
     top: 0;
-    /* background-color: #555; */
+    background-color: #555;
     width: 100%;
     height: 100%;
 }
@@ -42,7 +108,7 @@ html, body {
 #profile-dock:hover {
     cursor: pointer;
 }
-#cover, #ui-dock, #profile-dock {
+#ui-dock, #profile-dock {
     position: absolute;
     background-color: transparent;
     z-index: 100;
@@ -53,7 +119,11 @@ html, body {
     width: 100%;
     height: 80px;
     background-color: rgba(30,30,30,0.2);
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
+    z-index: 101;
 }
 #cover table {
     width: 100%;
@@ -63,7 +133,8 @@ html, body {
     width: 160px;
 }
 #cover #logo div {
-    border-right: 2px solid #fff;
+    border-right-width: 2px;
+    border-right-style: solid;
     padding: 0 10px 0 10px;
     height: 35px;
     width: 100%;
@@ -73,7 +144,7 @@ html, body {
     height: 100%;
 }
 #cover #slogan div{
-    color: #fff;
+    /* color: #fff; */
     font-size: 20px;
     padding-left: 5px;
 }
@@ -83,10 +154,6 @@ html, body {
 }
 #cover #open .pill-btn {
     padding: 2px 8px;
-    /* padding-top: 5px;
-    padding-bottom: 5px; */
-    /* width: 100%; */
-    /* height: 28px;  */
 }
 
 /* ui-dock */
@@ -181,26 +248,83 @@ html, body {
     }
 }
 
-/* modal */
-.dim {
-    background-color: rgba(50,50,50,0.8);
+/* 
+*    话题分享页样式  
+*/
+/* 话题内容 */
+.topic {
+    padding: 0 10px 10px;
+    border-bottom: 10px solid #eee;
 }
-.modal-content {
-    background-color: transparent;
+.topic-table, .topic-img {
+    width: 100%;
+}
+.topic-img {
+    border-radius: 5px;
+}
+.topic-table #shares,
+.topic-table #comments,
+.topic-table #likes {
     text-align: center;
-    position:fixed;
-    margin:auto;
-    padding: 5px;
-    left:0;
-    right:0;
-    top:0;
-    bottom:0;
-    width:200px;
-    height:40px;
-    box-shadow: none;
-    border: none;
+    padding-top: 10px;
+    /* padding-bottom: 10px; */
 }
-.modal-content a {
-    color: #fff;
-    font-size: 28px;
+.topic-table .touchable {
+    font-size: 18px;
 }
+.topic-table .touchable img {
+    width: 25px;
+    height: 25px;
+}
+/* 评论列表 */
+.comment-list, .comment-list * {
+    /* border: 1px dashed blue; */
+}
+.comment-list {
+    padding: 10px;
+}
+.comment-list > p {
+    font-size: 18px;
+}
+.comment-item {
+    overflow: hidden;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+.comment-item > .user-pic,
+.comment-item > .comment-text {
+    display: inline-block;
+}
+
+.comment-item > .user-pic {
+    vertical-align: top;
+}
+.comment-item > .user-pic > img{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+.comment-item > .comment-text {
+    width: 80%;
+    padding-left: 10px;
+}
+.comment-item > .comment-text > .user-name {
+    font-size: 16px;
+    color: #777;
+}
+.comment-item > .comment-text > .comment-time {
+    font-size: 12px;
+    color: #aaa;
+}
+.comment-item > .comment-text > .comment-content {
+    font-size: 18px;
+    padding: 5px 0;
+}
+@media screen and (min-width: 360px) {
+    .comment-item > .comment-text {
+        width: 85%;
+    }
+}
+/* 
+*    活动分享页样式  
+*/
