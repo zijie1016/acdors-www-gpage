@@ -55,7 +55,7 @@ function addModalEvent(settings){
   });
 }
 
-//判断是否有id值
+//判断是否有效
 function ready(id){
   return id != null && id != undefined && id != "";
 }
@@ -237,7 +237,32 @@ function buildCommentItem(item){
 function buildActivityShare(activity){
   $('body').prepend(buildWrapper('activity')); //非视频类分享包含元素
   $('#wrapper').append(buildHeadCover({logoUrl: '../img/logo-dark.png', color: '#111'})); //页头封面
-  $('#wrapper').append(buildIntroBlk(activity));
+
+  $('#wrapper').append(buildIntroBlk(activity)); // 图文介绍模块
+  $('#wrapper').append(buildSynopsis(activity)); // 故事梗概
+
+  // 加盟明星滑动列表
+  var containerClass = 'slide-list';
+  $('#wrapper').append(buildSlideList({
+    class: containerClass,
+    id: 'actor-list',
+    caption: '加盟明星',
+    data: activity.actorlist
+  }));
+  var actorlist = $('#actor-list .swiper-container').swiper({slidesPerView: 'auto'});
+
+  // 人物小传
+  $('#wrapper').append(buildSlideList({
+    class: containerClass,
+    id: 'cast-list',
+    caption: '人物小传',
+    data: activity.castlist
+  }));
+  var castlist = $('#cast-list .swiper-container').swiper({slidesPerView: 'auto'});
+
+  // 活动阶段
+  $('#wrapper').append(buildStage(activity.current_stage));
+
   $('#wrapper').append(buildSeeMoreModal()); // 弹出的跳转模态框
 }
 function buildIntroBlk(activity){
@@ -247,12 +272,55 @@ function buildIntroBlk(activity){
         '</div>' +
         '<div class="intro-text col-xs-12">' +
           '<p>' +
-            '剧组名称：' + activity.crew_name + '<br>' +
-            '剧组类型：' + activity.crew_type + '<br>' +
-            '剧组开机：' + getLocalTime({timestamp: activity.crew_bootime, format: 'yyyy/mm/dd'}) + '<br>' +
-            '起止时间：' + getLocalTime({timestamp: activity.begintime, format: 'yyyy/mm/dd'}) + ' - ' +
+            '<span class="light">剧组名称&ensp;&ensp;</span>' + activity.crew_name + '<br>' +
+            '<span class="light">剧组类型&ensp;&ensp;</span>' + activity.crew_type + '<br>' +
+            '<span class="light">剧组开机&ensp;&ensp;</span>' + getLocalTime({timestamp: activity.crew_bootime, format: 'yyyy/mm/dd'}) + '<br>' +
+            '<span class="light">起止时间&ensp;&ensp;</span>' + getLocalTime({timestamp: activity.begintime, format: 'yyyy/mm/dd'}) + ' - ' +
                          getLocalTime({timestamp: activity.endtime, format: 'yyyy/mm/dd'}) + '<br>' +
           '</p>' +
+          '<div class="pill-btn touchable">+关注</div>' + 
         '</div>' +
       '</div>';
+}
+function buildSynopsis(activity){
+  return '<div class="synopsis">' + 
+    buildSimpleText({
+      captionColor: '#aaa', 
+      caption: '故事概况', 
+      content: activity.introduction
+    }) + '</div>';
+}
+function buildSlideList(settings){
+  // 构建元素
+  var $slides = '<div id="'+settings.id+'" class="'+settings.class+'">' +
+            '<div class="light cap">' + settings.caption + '</div>' +
+            '<div class="swiper-container">' +
+              '<div class="swiper-wrapper">';
+  if(ready(settings.data) && settings.data.length != 0 ){
+    for(var i=0,len=settings.data.length; i<len; ++i){
+      $slides += '<div class="swiper-slide">' +
+            buildProfile({
+              url: ossUrl + settings.data[i].avatar,
+              name: settings.data[i].name
+            }) +
+          '</div>';
+    }
+  }
+  $slides += '</div>' +
+          '</div>' +
+        '</div>';
+ 
+  return $slides;
+}
+function buildProfile(data){
+  return '<div class="profile">' +
+          '<img src="'+data.url+'" alt="头像">' +
+          '<div class="name">' + data.name + '</div>' +
+        '</div>';
+}
+function buildStage(curStage){
+  return '<div class="stage">' + 
+      '<div class="light cap">活动实况</div>' + 
+      '<p>当前阶段：' + curStage + '</p>' +
+    '</div>';
 }

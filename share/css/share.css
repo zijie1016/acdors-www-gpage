@@ -7,6 +7,9 @@ html, body {
     font-size: 14px;
 }
 
+.row {
+    margin: 0;
+}
 
 
 /* 
@@ -18,12 +21,6 @@ html, body {
 }
 
 /* 包皮 */
-#wrapper{
-    /* border: 1px solid red; */
-}
-#wrapper *{
-    /* border: 1px dashed blue; */
-}
 #wrapper {
     width: 100%;
     max-width: 768px;
@@ -224,9 +221,6 @@ html, body {
     font-size: 20px;
     font-weight: bold;
 }
-#profile-doc, #profile-dock * {
-    /* border: 1px dashed yellow; */
-}
 #profile-dock #follow {
     width: 65px;
     padding: 0;
@@ -277,9 +271,6 @@ html, body {
     height: 25px;
 }
 /* 评论列表 */
-.comment-list, .comment-list * {
-    /* border: 1px dashed blue; */
-}
 .comment-list {
     padding: 10px;
 }
@@ -329,12 +320,17 @@ html, body {
 /* 
 *    活动分享页样式  
 */
-
+.light { /*用于浅色文本*/
+    color: #aaa;
+}
+.cap {
+    padding: 5px 20px 10px;
+    font-size: 16px;
+}
 /* 图文介绍模块 */
 .intro-blk {
     padding: 0;
-    /* background-color: #eee; */
-    margin: 0 1px;
+    /* margin: 0 1px; */
 }
 .intro-blk .intro-img {
     padding: 0;
@@ -343,11 +339,20 @@ html, body {
     width: 100%;
 }
 .intro-blk .intro-text {
-    padding: 20px 20px;
+    padding: 20px 20px 10px;
+    border-bottom: 1px solid #eee;
 }
 .intro-blk .intro-text p {
     font-size: 16px;
-    line-height: 230%;
+    line-height: 190%;
+}
+.intro-blk .intro-text .pill-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 70px;
+    height: 30px;
+    /* font-size: 16px; */
 }
 
 @media screen and (min-width: 768px){
@@ -355,12 +360,56 @@ html, body {
         padding: 30px 30px;
     }
 }
-/* @media (min-width: 992px) {
-    .intro-blk {
-        position: relative;
-    }
-    .intro-blk .intro-text p {
-        max-height: 320px;
-        overflow: hidden;
-    }
-} */
+
+/* 故事梗概 */
+.synopsis {
+    padding: 10px 18px;
+    border-bottom: 1px solid #eee;
+}
+.synopsis h4 {
+    font: 16px normal;
+}
+.synopsis p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+/* 加盟明星 */
+.slide-list {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+.slide-list .swiper-container {
+    width: 100%;
+}
+.slide-list .swiper-container,
+.slide-list .swiper-slide .profile {
+    height: 100px;
+}
+.slide-list .swiper-slide,
+.slide-list .swiper-slide .profile {
+    width: 100px;
+}
+.slide-list .profile {
+    /* padding: 10px 20px; */
+    text-align: center;
+}
+.slide-list .profile img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.slide-list .profile .name {
+    height: 40px;
+    padding: 8px 0;
+}
+/* 活动阶段 */
+.stage {
+    padding: 10px 0;
+}
+.stage p {
+   font-size: 16px; 
+   padding: 0 20px 10px;
+}
