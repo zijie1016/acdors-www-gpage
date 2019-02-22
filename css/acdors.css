@@ -225,23 +225,6 @@ body {
 
 /*暂时保留鼠标滑过变色的功能*/
 
-/*#career #ct-1:hover .career-thumb{*/
-    /*background-color: #feb333;*/
-/*}*/
-/*#career #ct-2:hover .career-thumb{*/
-    /*background-color: #3ad788;*/
-/*}*/
-/*#career #ct-3:hover .career-thumb{*/
-    /*background-color: #ff4457;*/
-/*}*/
-/*#career #ct-4:hover .career-thumb*/
-/*{*/
-    /*background-color: #7542f7;*/
-/*}*/
-/*#career #ct-5:hover .career-thumb{*/
-    /*background-color: #4c75f5;*/
-/*}*/
-
 #career .career-thumb img {
     width: 40px;
     height: 40px;

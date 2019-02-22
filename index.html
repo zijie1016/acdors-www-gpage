@@ -138,8 +138,8 @@
             // 热门剧组 - 剧组图片与简单剧组信息,不带查看详情链接
             $('#hot').append(buildIntroBlk(data.crewinfo, false));
 
-            if(data.actor[0].information != "") {
-            // if(data.actor[0].information == "") {
+            // if(data.actor[0].information != "") {
+            if(data.actor.length != 0){
 
               /* ================================
                   热门剧组 - 明星轮播图
