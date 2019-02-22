@@ -47,11 +47,6 @@
           $('#crew-album .row').append(buildAlbum(crew.crew_album)); // 剧组相册
         } // success
       }); // $.ajax
-
-      // $('#album-modal .modal-body').on('click', function () {
-      //   $('#album-modal').modal('hide');//隐藏modal
-      // })
-
     }); // $(function)
     function buildCrewTabs(){
       return '<div class="crew-info-tabs">' +
@@ -144,9 +139,6 @@
       return $album;
     }
     function buildAlbumItem(photo) {
-      // return '<button type="button" class="btn col-xs-4 col-sm-4 col-md-3" data-toggle="modal" data-target="#album-modal">' +
-      //         '<img class="img-responsive" src="'+ ossUrl + photo +'" alt="剧组相册">' +
-      //       '</button>';
       return '<img class="img-responsive col-xs-4 col-sm-4 col-md-3" src="'+ ossUrl + photo +'" alt="剧组相册">';
     }
   </script>
