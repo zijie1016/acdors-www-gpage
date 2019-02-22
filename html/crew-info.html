@@ -16,169 +16,139 @@
   <title>星榜戏逗 - 剧组详情</title>
 </head>
 <body>
-  <!--<div id="wrapper">-->
-
-  <!-------------------------------- 剧组详情 -------------------------------->
-  <div id="crew-info" class="container"></div> <!-- #crew-info -->
-
-  <!--相册原图模态框-->
-  <!--<div class="modal fade" id="album-modal">-->
-    <!--<div class="modal-body">-->
-      <!--<div class="close" data-dismiss="modal"></div>-->
-      <!--<img class="img-responsive" src="../img/album-img11.jpg" alt="img7">-->
-    <!--</div>-->
-  <!--</div>-->
-
-  <!--</div>-->
-
-
-  <!-------------------------------- 各种插件 -------------------------------->
   <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
   <script src="../plugin/swiper.js/2.7.6/js/idangerous.swiper.min.js"></script>
   <script src="../plugin/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-  <!-------------------------------- 自定义js -------------------------------->
   <script src="../js/acdors.js"></script>
   <script>
     $(function () {
       //创建页面公共组件
       createCommonComponents(2);
 
+      var index = GetQueryString('index');
+
       $.ajax({
         type: "get",
-        url: domainUrl + 'web/drama',
+        url: domainUrl + 'web/dramas',
         async: true,
         dataType: "json",
         success: function (data) {
-          data = data.data;
+          var crew = data.data[index];
+          var crewinfo = crew.crewinfo;
+          
+          $('.navbar').after('<div id="crew-info" class="container"></div>');
+          $('#crew-info').append(buildIntroBlk({crewinfo: crewinfo, seeMore: false})); // 剧组简单图文信息
+          $('#crew-info').append(buildSimpleText(crewinfo.introduction)); // 剧故事梗概
 
-          /* ================================
-              剧组图片与简单剧组信息
-            ================================ */
-          var $introBlk = '<div class="row intro-blk">' +
-              '<div class="intro-img col-xs-12 col-md-7">' +
-                '<img class="img-responsive" src="' + ossUrl + data.crew.crew_picurl + '" alt="剧组图片">' +
-              '</div>' +
-              '<div class="intro-text col-xs-12 col-md-5">' +
-                '<h3>' + data.crew.crew_name + '</h3>' +
-                '<p>' +
-                  '剧组类型：' + data.crew.crew_type + '<br>' +
-                  '导演：' + data.crew.crew_director + '<br>' +
-                  '制作公司：' + data.crew.crew_producer + '<br>' +
-                  '出品方：' + data.crew.crew_investor + '<br>' +
-                  '开机日期：' + data.crew.crew_bootime + '<br>' +
-                  '拍摄地点：' + data.crew.crew_position +
-                '</p>' +
-              '</div>' +
-            '</div>';
-          $('#crew-info').append($introBlk);
-          // 剧故事梗概
-          var $story = '<div class="simple-text">' +
-              '<h4>故事梗概：</h4>' +
-              '<p>' + data.crew.introduction + '</p>' +
-            '</div>';
-          $('#crew-info').append($story);
-
-          /* ================================
-              剧组详情标签页 - 主创、人物小传、相册
-            ================================ */
-          // 标签页
-          var $crewTabs = '<div class="crew-info-tabs">' +
-              '<ul class="nav nav-tabs row">' +
-                '<li class="active col-xs-4">' +
-                  '<a href="#creators" data-toggle="tab">主创团队</a>' +
-                '</li>' +
-                '<li class="col-xs-4">' +
-                  '<a href="#biographies" data-toggle="tab">人物小传</a>' +
-                '</li>' +
-                '<li class="col-xs-4">' +
-                  '<a href="#crew-album" data-toggle="tab">剧组相册</a>' +
-                '</li>' +
-              '</ul>' +
-              '<div class="tab-content">' +
-                '<div class="tab-pane active" id="creators"></div> ' +
-                '<div class="tab-pane" id="biographies"></div>' +
-                '<div class="tab-pane" id="crew-album"><div class="row"></div></div>' +
-              '</div>' +
-            '</div';
-          $('#crew-info').append($crewTabs);
-
-          // 主创团队
-          var creatorList = data.crewinfo.creatorlist;
-          for(var i=0,len=creatorList.length; i<len; ++i) {
-            var $creatorInfo = '<div class="media">' +
-                '<div class="media-left">' +
-                  '<img class="media-object img-circle" src="'+ ossUrl + creatorList[i].avatar +'" alt="主创照片">' +
-                '</div>' +
-                '<div class="media-body">' +
-                  '<table class="profile-info">' +
-                    '<thead>' +
-                      '<tr><th colspan="2"><h3>'+ creatorList[i].name +'</h3></th></tr>' +
-                    '</thead>' +
-                    '<tbody>' +
-                      '<tr>' +
-                        '<th>职业：</th>' +
-                        '<td>'+ creatorList[i].title +'</td>' +
-                      '</tr>' +
-                      '<tr>' +
-                        '<th>作品：</th>' +
-                        '<td>'+ creatorList[i].experiment +'</td>' +
-                      '</tr>' +
-                      '<tr>' +
-                        '<th>简介：</th>' +
-                        '<td>'+ creatorList[i].information +'</td>' +
-                      '</tr>' +
-                    '</tbody>' +
-                  '</table>' +
-                '</div>' +
-              '</div>';
-            $('#creators').append($creatorInfo);
-          }
-
-          // 人物小传
-          var castList = data.crewinfo.castlist;
-          for(var i=0,len=castList.length; i<len; ++i) {
-            var $biography = '<div class="profile-free row">' +
-                '<div class="profile-img col-xs-4 col-sm-3">' +
-                  '<img class="img-responsive img-circle" src="'+ ossUrl + castList[i].avatar +'" alt="人物图片">' +
-                '</div>' +
-                '<div class="profile-text-head col-xs-8 col-sm-9">' +
-                  '<h4>'+ castList[i].name +'</h4>' +
-                  '<p>' +
-                    '性别：' + ((castList[i].gender == "1") ? '男' : '女') + '<br>' +
-                    '角色：' + castList[i].position + '<br>' +
-                    '性格：' + castList[i].character +
-                  '</p>' +
-                '</div>' +
-                '<div class="profile-text-main col-xs-12 col-sm-9">' +
-                  '<table><tr>' +
-                    '<th>简介：</th>' +
-                    '<td>'+ castList[i].information +'</td>' +
-                  '</table></tr>' +
-                '</div>' +
-              '</div>';
-            $('#biographies').append($biography);
-          }
-
-          // 剧组相册
-          var crewAlbum = data.crewinfo.crew_album;
-          for(var i=0,len=crewAlbum.length; i<len; ++i) {
-            var $crewPic =
-                '<button type="button" class="btn col-xs-4 col-sm-4 col-md-3" data-toggle="modal" data-target="#album-modal">' +
-                  '<img class="img-responsive" src="'+ ossUrl + crewAlbum[i].photo +'" alt="剧组相册">' +
-                '</button>';
-            $('#crew-album .row').append($crewPic);
-          }
-
+          // 剧组详情标签页 - 主创、人物小传、相册
+          $('#crew-info').append(buildCrewTabs()); // 导航标签
+          $('#creators').append(buildCreatorList(crew.creatorlist)); // 主创团队列表
+          $('#biographies').append(buildBiographyList(crew.castlist)); // 人物小传列表
+          $('#crew-album .row').append(buildAlbum(crew.crew_album)); // 剧组相册
         } // success
       }); // $.ajax
 
-      $('#album-modal .modal-body').on('click', function () {
-        $('#album-modal').modal('hide');//隐藏modal
-      })
+      // $('#album-modal .modal-body').on('click', function () {
+      //   $('#album-modal').modal('hide');//隐藏modal
+      // })
 
     }); // $(function)
+    function buildCrewTabs(){
+      return '<div class="crew-info-tabs">' +
+            '<ul class="nav nav-tabs row">' +
+              '<li class="active col-xs-4">' +
+                '<a href="#creators" data-toggle="tab">主创团队</a>' +
+              '</li>' +
+              '<li class="col-xs-4">' +
+                '<a href="#biographies" data-toggle="tab">人物小传</a>' +
+              '</li>' +
+              '<li class="col-xs-4">' +
+                '<a href="#crew-album" data-toggle="tab">剧组相册</a>' +
+              '</li>' +
+            '</ul>' +
+            '<div class="tab-content">' +
+              '<div class="tab-pane active" id="creators"></div> ' +
+              '<div class="tab-pane" id="biographies"></div>' +
+              '<div class="tab-pane" id="crew-album"><div class="row"></div></div>' +
+            '</div>' +
+          '</div>';
+    }
+    function buildCreatorList(creatorList){
+      var $creatorList = '';
+      for(var i=0,len=creatorList.length; i<len; ++i) {
+        $creatorList += buildCreatorItem(creatorList[i]);
+      }
+      return $creatorList;
+    }
+    function buildCreatorItem(creator){
+      return '<div class="media">' +
+            '<div class="media-left">' +
+              '<img class="media-object img-circle" src="'+ ossUrl + creator.avatar +'" alt="主创照片">' +
+            '</div>' +
+            '<div class="media-body">' +
+              '<table class="profile-info">' +
+                '<thead>' +
+                  '<tr><th colspan="2"><h3>'+ creator.name +'</h3></th></tr>' +
+                '</thead>' +
+                '<tbody>' +
+                  '<tr>' +
+                    '<th>职业：</th>' +
+                    '<td>'+ creator.title +'</td>' +
+                  '</tr>' +
+                  '<tr>' +
+                    '<th>作品：</th>' +
+                    '<td>'+ creator.experiment +'</td>' +
+                  '</tr>' +
+                  '<tr>' +
+                    '<th>简介：</th>' +
+                    '<td>'+ creator.information +'</td>' +
+                  '</tr>' +
+                '</tbody>' +
+              '</table>' +
+            '</div>' +
+          '</div>';
+    }
+    function buildBiographyList(biographyList){
+      var $biographies = '';
+      for(var i=0,len=biographyList.length; i<len; ++i) {
+        $biographies += buildBiographyItem(biographyList[i]);
+      }
+      return $biographies;
+    }
+    function buildBiographyItem(biography){
+      return '<div class="profile-free row">' +
+            '<div class="profile-img col-xs-4 col-sm-3">' +
+              '<img class="img-responsive img-circle" src="'+ ossUrl + biography.avatar +'" alt="人物图片">' +
+            '</div>' +
+            '<div class="profile-text-head col-xs-8 col-sm-9">' +
+              '<h4>'+ biography.name +'</h4>' +
+              '<p>' +
+                '性别：' + ((biography.gender == "1") ? '男' : '女') + '<br>' +
+                '角色：' + biography.position + '<br>' +
+                '性格：' + biography.character +
+              '</p>' +
+            '</div>' +
+            '<div class="profile-text-main col-xs-12 col-sm-9">' +
+              '<table><tr>' +
+                '<th>简介：</th>' +
+                '<td>'+ biography.information +'</td>' +
+              '</table></tr>' +
+            '</div>' +
+          '</div>';
+    }
+    function buildAlbum(album){
+      var $album = '';
+      for(var i=0,len=album.length; i<len; ++i) {
+        $album += buildAlbumItem(album[i].photo);
+      }
+      return $album;
+    }
+    function buildAlbumItem(photo) {
+      // return '<button type="button" class="btn col-xs-4 col-sm-4 col-md-3" data-toggle="modal" data-target="#album-modal">' +
+      //         '<img class="img-responsive" src="'+ ossUrl + photo +'" alt="剧组相册">' +
+      //       '</button>';
+      return '<img class="img-responsive col-xs-4 col-sm-4 col-md-3" src="'+ ossUrl + photo +'" alt="剧组相册">';
+    }
   </script>
 </body>
 </html>

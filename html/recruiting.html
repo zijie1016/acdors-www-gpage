@@ -55,16 +55,16 @@
           else { //请求到了剧组数据
             crews = data.data;
             for(var i=0, len=crews.length; i<len; ++i){
-              getCrew(crews[i]);
+              getCrew(crews[i], i);
             }
           } // else 请求到了剧组数据
         } // success
       }); //$.ajax 请求剧组信息
     }); // $(function(){})
 
-    function getCrew(crew){
+    function getCrew(crew, index){
       // 剧组简单信息 
-      $('#hot-recommend').append(buildIntroBlk(crew.crewinfo, true));
+      $('#hot-recommend').append(buildIntroBlk({crewinfo: crew.crewinfo, index: index, seeMore: true}));
       $('#hot-recommend').append(buildSimpleText(crew.crewinfo.introduction));
 
       // 剧组明星介绍轮播图

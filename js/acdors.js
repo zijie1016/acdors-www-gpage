@@ -110,24 +110,24 @@ function getBannerSlides(data, slideId){
 }
 
 // 请求剧组信息（图片与简单信息）
-function buildIntroBlk(crewinfo, seeMore){
+function buildIntroBlk(settings){
   var $crewinfo = '<div class="row intro-blk">' +
     '<div class="intro-img col-xs-12 col-md-7">' +
-      '<img class="img-responsive" src="' + ossUrl + crewinfo.crew_picurl + '" alt="剧组图片">' +
+      '<img class="img-responsive" src="' + ossUrl + settings.crewinfo.crew_picurl + '" alt="剧组图片">' +
     '</div>' +
     '<div class="intro-text col-xs-12 col-md-5">' +
-      '<h3>' + crewinfo.crew_name + '</h3>' +
+      '<h3>' + settings.crewinfo.crew_name + '</h3>' +
       '<p>' +
-        '剧组类型：' + crewinfo.crew_type + '<br>' +
-        '导演：' + crewinfo.crew_director + '<br>' +
-        '制作公司：' + crewinfo.crew_producer + '<br>' +
-        '出品方：' + crewinfo.crew_investor + '<br>' +
-        '开机日期：' + crewinfo.crew_bootime + '<br>' +
-        '拍摄地点：' + crewinfo.crew_position +
+        '剧组类型：' + settings.crewinfo.crew_type + '<br>' +
+        '导演：' + settings.crewinfo.crew_director + '<br>' +
+        '制作公司：' + settings.crewinfo.crew_producer + '<br>' +
+        '出品方：' + settings.crewinfo.crew_investor + '<br>' +
+        '开机日期：' + settings.crewinfo.crew_bootime + '<br>' +
+        '拍摄地点：' + settings.crewinfo.crew_position +
       '</p>' +
     '</div>';
-  if(seeMore){ // 如果可以查看详情，加一个链接
-    $crewinfo += '<a class="col-xs-12 col-md-5" href="crew-info.html">查看剧组详情</a>';
+  if(settings.seeMore){ // 如果可以查看详情，加一个链接
+    $crewinfo += '<a class="col-xs-12 col-md-5" href="crew-info.html?index='+encodeURI(settings.index)+'">查看剧组详情</a>';
   }
   $crewinfo += '</div>';
 
