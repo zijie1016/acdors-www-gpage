@@ -136,7 +136,7 @@
           { //请求到了热门剧组数据
 
             // 热门剧组 - 剧组图片与简单剧组信息,不带查看详情链接
-            $('#hot').append(buildIntroBlk(data.crewinfo, false));
+            $('#hot').append(buildIntroBlk({crewinfo: data.crewinfo, seeMore: false}));
 
             // if(data.actor[0].information != "") {
             if(data.actor.length != 0){
@@ -202,7 +202,7 @@
               // 明星图片swiperjs配置
               var hotSlides = $('#hot-slides .swiper-container').swiper({
                 // loop: true,
-                autoplay: 2000,
+                autoplay: 6000,
                 grabCursor: true,
                 slidesPerView: 3,
                 autoplayDisableOnInteraction: true,
@@ -222,7 +222,7 @@
 
               // 明星介绍轮播文本 swiperjs 配置
               var hotInfoSlides = $('#hot-info-slides .swiper-container').swiper({
-                autoplay: 2000,
+                autoplay: 6000,
                 slidesPerView: 1,
                 centeredSlides: true,
                 autoplayDisableOnInteraction: true,

@@ -64,7 +64,10 @@
 
     function getCrew(crew, index){
       // 剧组简单信息 
-      $('#hot-recommend').append(buildIntroBlk({crewinfo: crew.crewinfo, index: index, seeMore: true}));
+      $('#hot-recommend').append(buildIntroBlk({
+        crewinfo: crew.crewinfo, 
+        index: index, 
+        seeMore: !(crew.creatorlist.length == 0)})); // 如果没有主创团队数据，不显示“查看剧组详情”按钮
       $('#hot-recommend').append(buildSimpleText(crew.crewinfo.introduction));
 
       // 剧组明星介绍轮播图
@@ -85,7 +88,7 @@
           prevClass: 'arrow-left',
           nextClass: 'arrow-right',
           frequency: 6000,
-          speed: 800
+          speed: 300
         }); // setBoundSlides
       } // if(actors[0].information != "")
     } // getCrew()
