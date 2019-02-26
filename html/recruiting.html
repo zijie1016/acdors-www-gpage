@@ -71,7 +71,7 @@
       $('#hot-recommend').append(buildSimpleText(crew.crewinfo.introduction));
 
       // 剧组明星介绍轮播图
-      if(crew.actor.length != 0) { //如果没有返回演员的数据，就完全不展示轮播图
+      if(crew.actor.length != 0 && crew.actor[0].information != "") { //如果没有返回演员的数据(或者演员介绍没有内容)，就完全不展示轮播图
         var actors = crew.actor;
         // 创建明星轮播框架
         $('#hot-recommend').append(buildActorSlides());
