@@ -14,20 +14,21 @@
 </head>
 <body>
   <script src="../plugin/jquery/1.12.4/jquery.min.js"></script>
-  <script src="../js/acdors.js"></script>
+  <script src="../js/global.js"></script>
   <script>
     $(function(){
+      var type = GetQueryString('type');
+      var id = GetQueryString('id');
 
       $.ajax({
         type: "get",
         async: true,
         url: domainUrl + 'my/setting',
-        data: {id: GetQueryString("id")},
+        data: {type: type, id: id},
         dataType: "json",
         success: function(data){
-          content = data.data.content;
           $('body').prepend('<div id="wrapper"><p></p></div>');
-          $('#wrapper > p').append(content);
+          $('#wrapper > p').append(data.data.content);
         }
       });
     });
