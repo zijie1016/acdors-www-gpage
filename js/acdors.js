@@ -1,17 +1,5 @@
 "use strict";
 
-// URL全局变量
-var ossUrl = 'https://acdors.oss-cn-beijing.aliyuncs.com/';
-var domainUrl = 'http://dev.api.acdors.com/';
-
-//获取查询字符串
-function GetQueryString(name)
-{
-  var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-  var r = window.location.search.substr(1).match(reg);
-  if(r!=null)return  decodeURI(r[2]); return null;
-}
-
 // 创建导航栏，根据序号index选择高亮链接
 function createNavbar(index){
   var $navbar = '<nav class="navbar">' + 
@@ -55,7 +43,7 @@ function createFooter(){
       '<p>备案号：京ICP备18028385号-1</p>' +
     '</div>' +
   '</div>';
-  $('body').append($footer);
+  $('body > script:first-of-type').before($footer); // 在第一个<script>之前插入页脚
 } // function createFooter()
 
 // 创建每个页面的公共组件
