@@ -35,14 +35,15 @@ function addZero(n){
   return n<10 ? '0'+n : n;
 }
 // 点击.touchable UI后跳转（官网或app下载页）
-function addModalEvent(settings){
-  $(settings.class).click(function(){
-    $(settings.id).modal({
-      backdrop: false
-    });
-  });
-  $(settings.id).click(function(){
-    $(this).modal('hide');
+function addDownloadAppEvent(settings){
+  $('.' + settings.class).click(function(){
+    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+
+    } else if (/(Android)/i.test(navigator.userAgent)) {
+      window.location = "https://sj.qq.com/myapp/detail.htm?apkName=com.bj.xd";
+    } else { 
+      window.location = "https://sj.qq.com/myapp/detail.htm?apkName=com.bj.xd";
+    }
   });
 }
 
@@ -126,7 +127,6 @@ function buildVidShare(){
   $('#vid-wrapper').append(buildHeadCover({logoUrl: '../img/logo.png', color: '#fff'}));
   $('#vid-wrapper').append(buildVidUIDock());
   $('#vid-wrapper').append(buildVidProfileDock());
-  $('#vid-wrapper').append(buildSeeMoreModal());
 }
 function buildVidUIDock(){
   return '<div id="ui-dock" class="touchable">' +
@@ -152,13 +152,6 @@ function buildVidProfileDock(){
       '</table>' +
     '</div>';
 }
-function buildSeeMoreModal(){
-  return '<div id="modal" class="modal fade dim">' +
-      '<div class="modal-content">' +
-        '<a class="pill-btn" href="http://www.acdors.com">了解更多</a>' +
-      '</div>' +
-    '</div> ';
-}
 
 /* 
 *    构建话题分享页面
@@ -168,7 +161,6 @@ function buildTopicShare(data){
   $('#wrapper').append(buildHeadCover({logoUrl: '../img/logo-dark.png', color: '#111'})); //页头封面
   $('#wrapper').append(buildTopicInfo(data.topicinfo)); // 话题内容
   $('#wrapper').append(buildCommentList(data.data)); // 评论区
-  $('#wrapper').append(buildSeeMoreModal()); // 弹出的跳转模态框
 }
 function buildTopicInfo(info){
   var $info = '<div class="topic">';
@@ -253,8 +245,6 @@ function buildActivityShare(activity){
 
   // 活动阶段
   $('#wrapper').append(buildStage(activity.current_stage));
-
-  $('#wrapper').append(buildSeeMoreModal()); // 弹出的跳转模态框
 }
 function buildIntroBlk(activity){
   return '<div class="row intro-blk">' +

@@ -24,7 +24,7 @@
       var did = GetQueryString('did');
       var topicid = GetQueryString('topic_id');
       var activityid = GetQueryString('activity_id');
-      
+
       // 视频分享页
       if(ready(did)){ 
         //构建基本页面
@@ -55,7 +55,7 @@
             $('#vid-wrapper').append($video);
 
             // 点击.touchable UI后跳转（官网或app下载页）
-            addModalEvent({class: '.touchable', id: '#modal'});
+            addDownloadAppEvent({class: 'touchable'});
           } // success()
         }); // ajaxGetShare
       } // if(视频分享)
@@ -68,8 +68,8 @@
           success: function(data){
             //构建页面
             buildTopicShare(data); 
-            // 点击.touchable UI后跳转（官网或app下载页）
-            addModalEvent({class: '.touchable', id: '#modal'});
+            // 点击.touchable UI后跳转app下载页）
+            addDownloadAppEvent({class: 'touchable'});
           } // success()
         }); // ajaxGetShare()
       } // else if(话题分享)
@@ -82,7 +82,7 @@
           success: function(data){
             //构建页面
             buildActivityShare(data.activity); 
-            addModalEvent({class: '.touchable', id: '#modal'});
+            addDownloadAppEvent({class: 'touchable'});
           } // success()
         }); // ajaxGetShare()
       }// else if(活动分享)
