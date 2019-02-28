@@ -38,7 +38,7 @@ function addZero(n){
 function addDownloadAppEvent(settings){
   $('.' + settings.class).click(function(){
     if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-
+      window.location = "https://itunes.apple.com/cn/app/id1436615667";
     } else if (/(Android)/i.test(navigator.userAgent)) {
       window.location = "https://sj.qq.com/myapp/detail.htm?apkName=com.bj.xd";
     } else { 
