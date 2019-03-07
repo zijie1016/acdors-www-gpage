@@ -106,10 +106,10 @@ function buildIntroBlk(settings){
     '<div class="intro-text col-xs-12 col-md-5">' +
       '<h3>' + settings.crewinfo.crew_name + '</h3>' +
       '<p>' +
-        '剧组类型：' + settings.crewinfo.crew_type + '<br>' +
+        '剧目类型：' + settings.crewinfo.crew_type + '<br>' +
         '导演：' + settings.crewinfo.crew_director + '<br>' +
         '制作公司：' + settings.crewinfo.crew_producer + '<br>' +
-        '出品方：' + settings.crewinfo.crew_investor + '<br>' +
+        '出品人/出品公司：' + settings.crewinfo.crew_investor + '<br>' +
         '开机日期：' + settings.crewinfo.crew_bootime + '<br>' +
         '拍摄地点：' + settings.crewinfo.crew_position +
       '</p>' +
