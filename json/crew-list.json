@@ -1,0 +1,68 @@
+{
+    "data": [
+        {
+          "crewinfo": { 
+            "id": "1",
+            "crew_name": "新天道",
+            "crew_director": "林子",
+            "crew_bootime": "拟定2019年内开机",
+            "crew_type": "商战,爱情,警匪",
+            "crew_producer": "北京中盛翰墨国际文化发展有限公司",
+            "crew_producer2": "",
+            "crew_investor": "天润影业、中盛翰墨、北京文租、温暖阳光下、网传天下",
+            "crew_ages": "",
+            "crew_position": "德国、以色列、北京、青岛、泰国、香港等地",
+            "crew_period": "4个月",
+            "introduction": "挚友父亲间接死于自己操盘的跨国药企并购案，这让有商业鬼才之称的丁元英开始反思自己这段时间的作为存在的误区，他以牺牲自身个体利益，保全各方的方式终止了手头的一切，回到英城隐居。在助理肖亚文的引荐下，他认识了年轻刑警芮小丹，并与之共同演绎了一段温情浪漫的天国之恋。芮小丹欣赏丁元英的睿智，但她也知道这个男人不会永远属于自己，于是她向丁元英讨要了一份礼物：把处在绝境的山水股份拉出泥潭，以此诠释丁元英所信奉的文化救世之道。一场在人性和规则间博弈的非常规重组商业神话即时上演。芮小丹破获跨国犯罪组织的大案，回英城途中遇到通缉犯，搏斗之中壮烈牺牲。收礼物的人没了，丁元英怀着失去挚爱的悲痛继续出手，山水股份在财务危机和舆论危机的多重压力下焕然重生。",
+            "crew_picurl": "crew/crew_20190304134735155167845567.jpg",
+            "crew_flowchart": "",
+            "crew_character_relation": "",
+            "createtime": "1548151651",
+            "lasttime": "1558693437",
+            "status": "1",
+            "create_mid": "2",
+            "last_mid": "8",
+            "is_del": "0",
+            "operator": "苏晨洋",
+            "type": "2",
+            "crew_assistant_director": "",
+            "crew_recruit_region": "",
+            "crew_recruit_num": "",
+            "crew_preparation_position": "",
+            "people_detail": ""
+          }
+        },
+        {
+          "crewinfo": {
+            "id": "3",
+            "crew_name": "少年水浒英雄传之阮小七",
+            "crew_director": "王子鸣",
+            "crew_bootime": "敬请期待",
+            "crew_type": "古装,武侠",
+            "crew_producer": "源木影视文化",
+            "crew_producer2": "",
+            "crew_investor": "天润影业、北京温暖阳光下教育科技有限公司",
+            "crew_ages": "",
+            "crew_position": "山东地区、无锡水浒城等",
+            "crew_period": "2个月",
+            "introduction": "北宋末年，郓城县县衙胡大明里道貌岸然，背地里却干尽了坏事，为掩人耳目，命衙役头领赵柯带领一般衙役冒充“水怪”在梁山泊一带行鸡鸣狗盗之事，百姓无不遭殃，由于石碣村的阮小七平日里就和乡民不睦，独来独往，行为怪异，被村民误以为是水怪事件的始作俑者，并被诬陷入狱，险些被胡大借机杀害，小七的嫂子阮二嫂极力劝说，阮小七最终决定探明水怪真相，以洗清自己的冤屈。最终，在阮小七的带领下，生擒了赵柯等人，水怪事件真相大白，胡大被绳之以法，阮小七成为一方英雄。",
+            "crew_picurl": "crew/crew_201904091258401554785920283.jpg",
+            "crew_flowchart": "",
+            "crew_character_relation": "",
+            "createtime": "1550202663",
+            "lasttime": "1558949874",
+            "status": "1",
+            "create_mid": "4",
+            "last_mid": "8",
+            "is_del": "0",
+            "operator": "苏晨洋",
+            "type": "1",
+            "crew_assistant_director": "",
+            "crew_recruit_region": "",
+            "crew_recruit_num": "",
+            "crew_preparation_position": "",
+            "people_detail": ""
+          }
+        }
+    ]
+}
